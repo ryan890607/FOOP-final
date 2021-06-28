@@ -70,7 +70,7 @@ public class Knight extends HealthPointSprite {
             this.directions.add(direction);
             fsm.trigger(WALK);
         }
-    }
+     }
 
     public void stop(Direction direction) {
         directions.remove(direction);
@@ -81,6 +81,11 @@ public class Knight extends HealthPointSprite {
 
     public void update() {
         fsm.update();
+
+        if(getX() < 0) location.x = 0;
+        if(getY() < 0) location.y = 0;
+        if(getX() > 1024-getRange().width) location.x = 1024-getRange().width;
+        if(getY() > 768-getRange().height) location.y = 768-getRange().height;
     }
 
     @Override
