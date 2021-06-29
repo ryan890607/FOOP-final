@@ -18,9 +18,11 @@ public abstract class HealthPointSprite extends Sprite {
         hpBar.setOwner(this);
     }
 
+
+
     @Override
-    public void onDamaged(Rectangle damageArea, int damage) {
-        hpBar.onDamaged(damageArea, damage);
+    public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
+        hpBar.onDamaged(attacker, damageArea, damage);
         if (hpBar.isDead()) {
             world.removeSprite(this);
             AudioPlayer.playSounds(AUDIO_DIE);

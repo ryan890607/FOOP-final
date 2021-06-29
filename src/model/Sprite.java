@@ -14,7 +14,7 @@ public abstract class Sprite {
 
     public abstract void render(Graphics g);
 
-    public abstract void onDamaged(Rectangle damageArea, int damage);
+    public abstract void onDamaged(Sprite attacker, Rectangle damageArea, int damage);
 
     public World getWorld() {
         return world;
@@ -71,4 +71,10 @@ public abstract class Sprite {
     public boolean isAlive() {
         return world != null;
     }
+
+    public void setResponseDirection(Direction responseDirection) {};
+
+    public Direction getResponseDirection(){ return null; };
+
+
 }
