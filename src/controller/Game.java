@@ -2,6 +2,7 @@ package controller;
 
 import knight.Knight;
 import model.Direction;
+import model.Sprite;
 import model.World;
 
 /**

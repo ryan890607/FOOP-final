@@ -24,13 +24,13 @@ public class Main {
         addAudioByFilePath(Attacking.AUDIO_SWORD_CLASH_2, new File("assets/audio/sword-clash2.wav"));
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 
-        // initialization procedure
+        // initialization
 
         Knight p1 = new Knight(100, new Point(0, 400+768));
         Knight p2 = new Knight(150, new Point(300, 300+768));
         IronBoar m1 = new IronBoar(30, new Point(300, 150));
 
-        World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2);  // model
+        World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2, m1);  // model
 
         Game game = new Game(world, p1, p2);  // controller
         GameView view = new GameView(game);  // view
