@@ -26,6 +26,7 @@ public class Knight extends HealthPointSprite {
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
+    public Dimension jumpStep;
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED
@@ -40,11 +41,11 @@ public class Knight extends HealthPointSprite {
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new KnightImageRenderer(this);
-        State idle = new WaitingPerFrame(4,
+        State idle = new WaitingPerFrame(8,
                 new Idle(imageStatesFromFolder("assets/idle", imageRenderer)));
-        State walking = new WaitingPerFrame(2,
+        State walking = new WaitingPerFrame(1,
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
-        State attacking = new WaitingPerFrame(3,
+        State attacking = new WaitingPerFrame(5,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
 
         fsm.setInitialState(idle);
@@ -52,6 +53,8 @@ public class Knight extends HealthPointSprite {
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(ATTACK).to(attacking));
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
+
+        jumpStep = new Dimension(0, 0);
     }
 
     public void attack() {
@@ -82,10 +85,62 @@ public class Knight extends HealthPointSprite {
     public void update() {
         fsm.update();
 
+        jump(jumpStep.height);
         if(getX() < 0) location.x = 0;
         if(getY() < 0) location.y = 0;
-        if(getX() > 1024-getRange().width) location.x = 1024-getRange().width;
-        if(getY() > 768-getRange().height) location.y = 768-getRange().height;
+        if(getX() > world.getBackground().getWidth(null)-getRange().width) location.x = world.getBackground().getWidth(null)-getRange().width;
+        if(getY() > world.getBackground().getHeight(null)-getRange().height) location.y = world.getBackground().getHeight(null)-getRange().height;
+    }
+
+    public void jump(int now) {
+        jumpStep.setSize(0, now);
+        world.move(this, jumpStep);
+        // System.out.println(jumpStep);
+        switch (now) {
+            case -49:
+                jumpStep.setSize(0, -36);
+                break;
+            case -36:
+                jumpStep.setSize(0, -25);
+                break;
+            case -25:
+                jumpStep.setSize(0, -16);
+                break;
+            case -16:
+                jumpStep.setSize(0, -9);
+                break;
+            case -9:
+                jumpStep.setSize(0, -4);
+                break;
+            case -4:
+                jumpStep.setSize(0, -1);
+                break;
+            case -1:
+                jumpStep.setSize(0, 1);
+                break;
+            case 1:
+                jumpStep.setSize(0, 4);
+                break;
+            case 4:
+                jumpStep.setSize(0, 9);
+                break;
+            case 9:
+                jumpStep.setSize(0, 16);
+                break;
+            case 16:
+                jumpStep.setSize(0, 25);
+                break;
+            case 25:
+                jumpStep.setSize(0, 36);
+                break;
+            case 36:
+                jumpStep.setSize(0, 49);
+                break;
+            case 49:
+            case 0:
+                jumpStep.setSize(0, 0);
+                break;
+        }
     }
 
     @Override

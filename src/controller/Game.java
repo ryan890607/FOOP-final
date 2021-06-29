@@ -30,6 +30,10 @@ public class Game extends GameLoop {
         getPlayer(playerNumber).attack();
     }
 
+    public void jump(int playerNumber) {
+        if(getPlayer(playerNumber).jumpStep.height == 0) getPlayer(playerNumber).jump(-49);
+    }
+
     public Knight getPlayer(int playerNumber) {
         return playerNumber == 1 ? p1 : p2;
     }

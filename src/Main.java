@@ -25,15 +25,12 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 
         // initialization procedure
-        Knight p1 = new Knight(100, new Point(0, 0));
-        Knight p2 = new Knight(150, new Point(300, 300));
-        World world = new World("assets/backgound/fallguys.jpg", new KnightCollisionHandler(), p1, p2);  // model
+        Knight p1 = new Knight(100, new Point(0, 400+768));
+        Knight p2 = new Knight(150, new Point(300, 300+768));
+        World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2);  // model
         Game game = new Game(world, p1, p2);  // controller
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop
         view.launch(); // launch the GUI
     }
 }
-
-
-
