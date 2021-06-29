@@ -6,7 +6,7 @@ import knight.Walking;
 import model.HealthPointSprite;
 import model.World;
 import views.GameView;
-
+import ironBoar.IronBoar;
 import java.awt.*;
 import java.io.File;
 
@@ -25,9 +25,10 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 
         // initialization procedure
-        Knight p1 = new Knight(100, new Point(0, 0));
+        Knight p1 = new Knight(150, new Point(0, 0));
         Knight p2 = new Knight(150, new Point(300, 300));
-        World world = new World("assets/backgound/fallguys.jpg", new KnightCollisionHandler(), p1, p2);  // model
+        IronBoar m1 = new IronBoar(30, new Point(300, 150));
+        World world = new World("assets/backgound/fallguys.jpg", new KnightCollisionHandler(), p1, m1);  // model
         Game game = new Game(world, p1, p2);  // controller
         GameView view = new GameView(game);  // view
         game.start();  // run the game and the game loop

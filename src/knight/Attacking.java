@@ -41,9 +41,9 @@ public class Attacking extends Sequence {
     @Override
     public void render(Graphics g) {
         super.render(g);
-         Rectangle damageArea = damageArea();
-         g.setColor(Color.BLUE);
-         g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+        Rectangle damageArea = damageArea();
+        g.setColor(Color.BLUE);
+        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
     }
 
     private void effectDamage() {
@@ -53,7 +53,8 @@ public class Attacking extends Sequence {
         boolean hasClash = false;
         for (Sprite sprite : sprites) {
             if (knight != sprite) {
-                sprite.onDamaged(damageArea, knight.getDamage());
+                sprite.setResponseDirection(knight.getFace());
+                sprite.onDamaged(knight, damageArea, knight.getDamage());
                 hasClash = true;
             }
         }

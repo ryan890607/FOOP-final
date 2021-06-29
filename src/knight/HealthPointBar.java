@@ -9,6 +9,7 @@ import java.awt.*;
  */
 public class HealthPointBar extends Sprite {
     private final int maxHp;
+    public final double threshold = 0.1;
     private Sprite owner;
     private int hp;
 
@@ -39,7 +40,7 @@ public class HealthPointBar extends Sprite {
     }
 
     @Override
-    public void onDamaged(Rectangle damageArea, int damage) {
+    public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
         this.hp = Math.max(hp - damage, 0);
     }
 
@@ -60,5 +61,9 @@ public class HealthPointBar extends Sprite {
 
     public boolean isDead() {
         return hp <= 0;
+    }
+
+    public boolean isHarmless(int damage){
+        return (double)damage / maxHp <= threshold;
     }
 }
