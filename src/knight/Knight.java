@@ -9,7 +9,7 @@ import model.HealthPointSprite;
 import model.SpriteShape;
 
 import java.awt.*;
-aimport java.lang.reflect.Array;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -91,6 +91,7 @@ public class Knight extends HealthPointSprite {
     public void update() {
         fsm.update();
 
+        if(this.world == null) return;
         jump(jumpStep);
         if(getX() < 0) location.x = 0;
         if(getY() < 0) location.y = 0;

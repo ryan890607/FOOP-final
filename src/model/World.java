@@ -135,5 +135,15 @@ public class World {
             sprite.render(g);
             sprite.setLocation(new Point(sprite.getX()+sx, sprite.getY()+sy-768));
         }
+        g.setColor(Color.black);
+        g.fillRect(0, 0, 128, 96);
+        for (Sprite sprite : sprites) {
+            g.setColor(Color.RED);
+            Point p = sprite.getLocation();
+            g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 6, 6);
+        }
+        g.setColor(Color.green);
+        Point p = player.getLocation();
+        g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
     }
 }
