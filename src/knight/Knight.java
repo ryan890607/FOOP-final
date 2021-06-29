@@ -9,6 +9,9 @@ import model.HealthPointSprite;
 import model.SpriteShape;
 
 import java.awt.*;
+aimport java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -26,7 +29,8 @@ public class Knight extends HealthPointSprite {
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
-    public Dimension jumpStep;
+    public int jumpStep;
+    private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED
@@ -54,7 +58,9 @@ public class Knight extends HealthPointSprite {
         fsm.addTransition(from(idle).when(ATTACK).to(attacking));
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
 
-        jumpStep = new Dimension(0, 0);
+        jumpStep = -1;
+        int size = jumpSequence.size();
+        for(int i = size-2; i >= 0; --i) jumpSequence.add(-(jumpSequence.get(i)));
     }
 
     public void attack() {
@@ -85,7 +91,7 @@ public class Knight extends HealthPointSprite {
     public void update() {
         fsm.update();
 
-        jump(jumpStep.height);
+        jump(jumpStep);
         if(getX() < 0) location.x = 0;
         if(getY() < 0) location.y = 0;
         if(getX() > world.getBackground().getWidth(null)-getRange().width) location.x = world.getBackground().getWidth(null)-getRange().width;
@@ -93,54 +99,9 @@ public class Knight extends HealthPointSprite {
     }
 
     public void jump(int now) {
-        jumpStep.setSize(0, now);
-        world.move(this, jumpStep);
-        // System.out.println(jumpStep);
-        switch (now) {
-            case -49:
-                jumpStep.setSize(0, -36);
-                break;
-            case -36:
-                jumpStep.setSize(0, -25);
-                break;
-            case -25:
-                jumpStep.setSize(0, -16);
-                break;
-            case -16:
-                jumpStep.setSize(0, -9);
-                break;
-            case -9:
-                jumpStep.setSize(0, -4);
-                break;
-            case -4:
-                jumpStep.setSize(0, -1);
-                break;
-            case -1:
-                jumpStep.setSize(0, 1);
-                break;
-            case 1:
-                jumpStep.setSize(0, 4);
-                break;
-            case 4:
-                jumpStep.setSize(0, 9);
-                break;
-            case 9:
-                jumpStep.setSize(0, 16);
-                break;
-            case 16:
-                jumpStep.setSize(0, 25);
-                break;
-            case 25:
-                jumpStep.setSize(0, 36);
-                break;
-            case 36:
-                jumpStep.setSize(0, 49);
-                break;
-            case 49:
-            case 0:
-                jumpStep.setSize(0, 0);
-                break;
-        }
+        if(now < 0) return;
+        world.jump(this, new Dimension(0, jumpSequence.get(now)));
+        jumpStep = now == jumpSequence.size()-1? -1:now+1;
     }
 
     @Override

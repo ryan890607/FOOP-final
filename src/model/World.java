@@ -43,7 +43,6 @@ public class World {
             sprite.update();
         }
         // adjust position
-        if(player.jumpStep.height != 0) return;
         if(player.getX() <= 300) {
             sx = 0;
         }
@@ -55,6 +54,10 @@ public class World {
         }
         if(sx < 0) sx = 0;
         if(sx > background.getWidth(null)-1024) sx = background.getWidth(null)-1024;
+
+
+        if(player.jumpStep >= 0) return;
+
 
         if(player.getY() >= background.getHeight(null)-300) {
             sy = background.getHeight(null);
