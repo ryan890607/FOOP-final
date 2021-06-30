@@ -23,6 +23,8 @@ public class LoginWorld {
     int sx, sy; // left-down corner's axis of background
     public static final String BGM = "loginbgm";
     public Clip clip;
+    public int state = 0;
+    public String account = "", password = "";
 
     public LoginWorld(String backgroundName) {
         try {
@@ -48,5 +50,25 @@ public class LoginWorld {
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
         g.drawImage(background, 0, 0, null);
+        //System.out.print(state);
+        switch (state) {
+            case 0:
+                break;
+            case 1:
+                g.setColor(Color.white);
+                g.fillRect(557, 300, 195, 31);
+
+                break;
+            case 2:
+                g.setColor(Color.white);
+                g.fillRect(557, 340, 195, 31);
+                break;
+        }
+        g.setColor(Color.black);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+        g.drawString(account, 565, 320);
+        String temp = "";
+        for(int i = 0; i < password.length(); ++i) temp += '*';
+        g.drawString(temp, 565, 360);
     }
 }

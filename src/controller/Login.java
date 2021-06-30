@@ -12,7 +12,9 @@ public class Login {
         this.loginWorld = loginWorld;
     }
 
-    public void loginSuccess() { gameLoop.stop(); }
+    public void loginSuccess() {
+        if(loginWorld.account.equals("kuo2020") && loginWorld.password.equals("e04e04e04")) gameLoop.stop();
+    }
 
     public void setGameLoop(GameLoop gameLoop) { this.gameLoop = gameLoop; }
 
@@ -20,7 +22,7 @@ public class Login {
         this.view = view;
     }
 
-    protected LoginWorld getWorld() {
+    public LoginWorld getWorld() {
         return loginWorld;
     }
 }
