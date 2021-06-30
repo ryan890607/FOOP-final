@@ -105,6 +105,7 @@ public class World {
 
     public void move(Sprite from, Dimension offset) {
         Point originalLocation = new Point(from.getLocation());
+        Rectangle originalBody = new Rectangle(from.getBody());
         from.getLocation().translate(offset.width, offset.height);
 
         Rectangle body = from.getBody();
@@ -126,13 +127,21 @@ public class World {
 	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
             if (body.intersects(range)) {
                 to.collisionHandler(originalLocation, from);
-            }
+            } else if (from instanceof Knight) {
+	        if (originalBody.x + body.width >= range.x && originalBody.x <= range.x + range.width && (body.x + body.width < range.x || body.x > range.x + range.width))
+		    if (originalBody.y < range.y && range.y - originalBody.y - body.height < 20)
+			((Knight)from).fallCount = 0;  //start falling
+	    }
         }
 
         for (Obstacle3 to : rocks) {
 	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
             if (body.intersects(range)) {
                 to.collisionHandler(originalLocation, from);
+            } else if (from instanceof Knight) {
+	        if (originalBody.x + body.width >= range.x && originalBody.x <= range.x + range.width && (body.x + body.width < range.x || body.x > range.x + range.width))
+		    if (originalBody.y < range.y && range.y - originalBody.y - body.height < 20)
+			((Knight)from).fallCount = 0;  //start falling
             }
         }
     }
