@@ -1,5 +1,6 @@
 package controller;
 
+import media.AudioPlayer;
 import model.LoginWorld;
 import model.World;
 
@@ -7,7 +8,7 @@ import model.World;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class GameLoop {
-    private boolean running;
+    public int running;
     private View view;
     private Login login;
     private Game game;
@@ -25,15 +26,17 @@ public class GameLoop {
 
     private void gameLoop() {
         this.view = login.view;
-        running = true;
-        while (running) {
+        running = 0;
+        getLoginWorld().playSound();
+        while (running == 0) {
             LoginWorld world = getLoginWorld();
             world.update();
             view.render(world);
             delay(15);
         }
-        running = true;
-        while (running) {
+        AudioPlayer.stopSounds(getLoginWorld().clip);
+        getWorld().playSound();
+        while (running == 1) {
             World world = getWorld();
             world.update();
             view.render(world);
@@ -46,7 +49,7 @@ public class GameLoop {
     protected LoginWorld getLoginWorld() { return login.getWorld(); }
 
     public void stop() {
-        running = false;
+        running++;
     }
 
     private void delay(long ms) {

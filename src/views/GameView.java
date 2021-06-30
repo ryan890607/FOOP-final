@@ -25,12 +25,14 @@ public class GameView extends JFrame {
     private final Canvas canvas = new Canvas();
     private final Game game;
     private final Login login;
+    private final GameLoop gameLoop;
 
     public GameView(Login login, Game game) throws HeadlessException {
         this.login = login;
         this.game = game;
         login.setView(canvas);
         game.setView(canvas);
+        gameLoop = login.gameLoop;
     }
 
     public void launch() {
@@ -45,72 +47,91 @@ public class GameView extends JFrame {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
-                switch (keyEvent.getKeyCode()) {
-                    case KeyEvent.VK_ENTER:
-                        login.loginSuccess();
-                        break;
-                    case KeyEvent.VK_W:
-                        game.moveKnight(P1, Direction.UP);
-                        break;
-                    case KeyEvent.VK_S:
-                        game.moveKnight(P1, Direction.DOWN);
-                        break;
-                    case KeyEvent.VK_A:
-                        game.moveKnight(P1, Direction.LEFT);
-                        break;
-                    case KeyEvent.VK_D:
-                        game.moveKnight(P1, Direction.RIGHT);
-                        break;
-                    case KeyEvent.VK_E:
-                        game.attack(P1);
-                        break;
-                    case KeyEvent.VK_SPACE:
-                        game.jump(P1);
-                        break;
-                    case KeyEvent.VK_I:
-                        game.moveKnight(P2, Direction.UP);
-                        break;
-                    case KeyEvent.VK_K:
-                        game.moveKnight(P2, Direction.DOWN);
-                        break;
-                    case KeyEvent.VK_J:
-                        game.moveKnight(P2, Direction.LEFT);
-                        break;
-                    case KeyEvent.VK_L:
-                        game.moveKnight(P2, Direction.RIGHT);
-                        break;
-                    case KeyEvent.VK_U:
-                        game.attack(P2);
+                switch (gameLoop.running) {
+                    case 0:
+                        switch (keyEvent.getKeyCode()) {
+                            case KeyEvent.VK_ENTER:
+                                login.loginSuccess();
+                                break;
+                        }
+                    case 1:
+                        switch (keyEvent.getKeyCode()) {
+                            case KeyEvent.VK_W:
+                                game.moveKnight(P1, Direction.UP);
+                                break;
+                            case KeyEvent.VK_S:
+                                game.moveKnight(P1, Direction.DOWN);
+                                break;
+                            case KeyEvent.VK_A:
+                                game.moveKnight(P1, Direction.LEFT);
+                                break;
+                            case KeyEvent.VK_D:
+                                game.moveKnight(P1, Direction.RIGHT);
+                                break;
+                            case KeyEvent.VK_E:
+                                game.attack(P1);
+                                break;
+                            case KeyEvent.VK_SPACE:
+                                game.jump(P1);
+                                break;
+                            case KeyEvent.VK_I:
+                                game.moveKnight(P2, Direction.UP);
+                                break;
+                            case KeyEvent.VK_K:
+                                game.moveKnight(P2, Direction.DOWN);
+                                break;
+                            case KeyEvent.VK_J:
+                                game.moveKnight(P2, Direction.LEFT);
+                                break;
+                            case KeyEvent.VK_L:
+                                game.moveKnight(P2, Direction.RIGHT);
+                                break;
+                            case KeyEvent.VK_U:
+                                game.attack(P2);
+                                break;
+                        }
                         break;
                 }
+
             }
 
             @Override
             public void keyReleased(KeyEvent keyEvent) {
-                switch (keyEvent.getKeyCode()) {
-                    case KeyEvent.VK_W:
-                        game.stopKnight(P1, Direction.UP);
+                switch (gameLoop.running) {
+                    case 0:
+                        switch (keyEvent.getKeyCode()) {
+                            case KeyEvent.VK_ENTER:
+                                login.loginSuccess();
+                                break;
+                        }
                         break;
-                    case KeyEvent.VK_S:
-                        game.stopKnight(P1, Direction.DOWN);
-                        break;
-                    case KeyEvent.VK_A:
-                        game.stopKnight(P1, Direction.LEFT);
-                        break;
-                    case KeyEvent.VK_D:
-                        game.stopKnight(P1, Direction.RIGHT);
-                        break;
-                    case KeyEvent.VK_I:
-                        game.stopKnight(P2, Direction.UP);
-                        break;
-                    case KeyEvent.VK_K:
-                        game.stopKnight(P2, Direction.DOWN);
-                        break;
-                    case KeyEvent.VK_J:
-                        game.stopKnight(P2, Direction.LEFT);
-                        break;
-                    case KeyEvent.VK_L:
-                        game.stopKnight(P2, Direction.RIGHT);
+                    case 1:
+                        switch (keyEvent.getKeyCode()) {
+                            case KeyEvent.VK_W:
+                                game.stopKnight(P1, Direction.UP);
+                                break;
+                            case KeyEvent.VK_S:
+                                game.stopKnight(P1, Direction.DOWN);
+                                break;
+                            case KeyEvent.VK_A:
+                                game.stopKnight(P1, Direction.LEFT);
+                                break;
+                            case KeyEvent.VK_D:
+                                game.stopKnight(P1, Direction.RIGHT);
+                                break;
+                            case KeyEvent.VK_I:
+                                game.stopKnight(P2, Direction.UP);
+                                break;
+                            case KeyEvent.VK_K:
+                                game.stopKnight(P2, Direction.DOWN);
+                                break;
+                            case KeyEvent.VK_J:
+                                game.stopKnight(P2, Direction.LEFT);
+                                break;
+                            case KeyEvent.VK_L:
+                                game.stopKnight(P2, Direction.RIGHT);
+                                break;
+                        }
                         break;
                 }
             }
