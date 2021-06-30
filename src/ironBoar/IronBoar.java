@@ -32,7 +32,7 @@ public class IronBoar extends HealthPointSprite {
     private Direction responseDirection;
     private Direction walkingDirection;
     private Sprite target;
-//    public static final String GET_ATTACK = "get_attack";
+    public static final String WAIL = "wail";
 
 
 
@@ -117,6 +117,7 @@ public class IronBoar extends HealthPointSprite {
     @Override
     public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
         hpBar.onDamaged(attacker, damageArea, damage);
+        AudioPlayer.playSounds(WAIL);
         setTarget(attacker);
         if (hpBar.isHarmless(damage))
             setResponseDirection(null);
