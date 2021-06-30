@@ -8,15 +8,23 @@ import model.World;
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
-public class Game extends GameLoop {
+public class Game {
     private final Knight p1;
     private final Knight p2;
     private final World world;
+    GameLoop.View view;
+    GameLoop gameLoop;
 
     public Game(World world, Knight p1, Knight p2) {
         this.p1 = p1;
         this.p2 = p2;
         this.world = world;
+    }
+
+    public void setGameLoop(GameLoop gameLoop) { this.gameLoop = gameLoop; }
+
+    public void setView(GameLoop.View view) {
+        this.view = view;
     }
 
     public void moveKnight(int playerNumber, Direction direction) {
@@ -39,7 +47,6 @@ public class Game extends GameLoop {
         return playerNumber == 1 ? p1 : p2;
     }
 
-    @Override
     protected World getWorld() {
         return world;
     }

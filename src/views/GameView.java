@@ -2,7 +2,9 @@ package views;
 
 import controller.Game;
 import controller.GameLoop;
+import controller.Login;
 import model.Direction;
+import model.LoginWorld;
 import model.Sprite;
 import model.World;
 
@@ -22,9 +24,12 @@ public class GameView extends JFrame {
     public static final int P2 = 2;
     private final Canvas canvas = new Canvas();
     private final Game game;
+    private final Login login;
 
-    public GameView(Game game) throws HeadlessException {
+    public GameView(Login login, Game game) throws HeadlessException {
+        this.login = login;
         this.game = game;
+        login.setView(canvas);
         game.setView(canvas);
     }
 
@@ -41,6 +46,9 @@ public class GameView extends JFrame {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyCode()) {
+                    case KeyEvent.VK_ENTER:
+                        login.loginSuccess();
+                        break;
                     case KeyEvent.VK_W:
                         game.moveKnight(P1, Direction.UP);
                         break;
@@ -111,10 +119,17 @@ public class GameView extends JFrame {
 
     public static class Canvas extends JPanel implements GameLoop.View {
         private World world;
+        private LoginWorld loginWorld;
 
         @Override
         public void render(World world) {
             this.world = world;
+            repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
+        }
+
+        @Override
+        public void render(LoginWorld loginWorld) {
+            this.loginWorld = loginWorld;
             repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
         }
 
@@ -125,7 +140,8 @@ public class GameView extends JFrame {
             g.setColor(Color.WHITE); // paint background with all white
             g.fillRect(0, 0, GameView.WIDTH, GameView.HEIGHT);
 
-            world.render(g); // ask the world to paint itself and paint the sprites on the canvas
+            if(world != null) world.render(g); // ask the world to paint itself and paint the sprites on the canvas
+            else loginWorld.render(g);
         }
     }
 }

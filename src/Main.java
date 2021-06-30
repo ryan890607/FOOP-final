@@ -1,9 +1,12 @@
 import controller.Game;
+import controller.GameLoop;
+import controller.Login;
 import knight.Attacking;
 import knight.Knight;
 import knight.KnightCollisionHandler;
 import knight.Walking;
 import model.HealthPointSprite;
+import model.LoginWorld;
 import model.World;
 import starPixie.StarPixie;
 import views.GameView;
@@ -27,6 +30,7 @@ public class Main {
         addAudioByFilePath(World.BGM, new File("assets/audio/background_BGM.wav"));
         addAudioByFilePath(IronBoar.WAIL, new File("assets/audio/wail.wav"));
         addAudioByFilePath(Knight.JUMP, new File("assets/audio/jump.wav"));
+        addAudioByFilePath(LoginWorld.BGM, new File("assets/audio/background_BGM.wav"));
 
         // initialization
 
@@ -35,11 +39,15 @@ public class Main {
         IronBoar m1 = new IronBoar(30, new Point(300, 150));
         IronBoar m2 = new IronBoar(30, new Point(500, 150));
         StarPixie m3 = new StarPixie(30, new Point(300, 350));
-        World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
+        World world = new World("assets/background/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
+        LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.jpg");
 
         Game game = new Game(world, p1, p2);  // controller
-        GameView view = new GameView(game);  // view
-        game.start();  // run the game and the game loop
+
+        Login login = new Login(loginWorld);
+        GameLoop gameLoop = new GameLoop(login, game);
+        GameView view = new GameView(login, game);  // view
+        gameLoop.start();  // run the game and the game loop
         view.launch(); // launch the GUI
     }
 }
