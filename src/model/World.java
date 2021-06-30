@@ -58,9 +58,7 @@ public class World {
         if(sx < 0) sx = 0;
         if(sx > background.getWidth(null)-1024) sx = background.getWidth(null)-1024;
 
-
         if(player.jumpStep >= 0) return;
-
 
         if(player.getY() >= background.getHeight(null)-300) {
             sy = background.getHeight(null);
@@ -132,12 +130,17 @@ public class World {
     // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
     // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
     public void render(Graphics g) {
-        g.drawImage(background, 0, 0, 1024, 768, sx, sy-768, sx+1024, sy, null);
+        int sxtemp = sx, sytemp = sy;
+        g.drawImage(background, 0, 0, 1024, 768, sxtemp, sytemp-768, sxtemp+1024, sytemp, null);
         for (Sprite sprite : sprites) {
-            sprite.setLocation(new Point(sprite.getX()-sx, sprite.getY()-sy+768));
+            //System.out.println(sprite.location);
+            //System.out.printf("%d %d\n", sxtemp, sytemp);
+            sprite.setLocation(new Point(sprite.getX()-sxtemp, sprite.getY()-sytemp+768));
+            //System.out.printf("%d %d\n", sxtemp, sytemp);
             sprite.render(g);
-            sprite.setLocation(new Point(sprite.getX()+sx, sprite.getY()+sy-768));
+            sprite.setLocation(new Point(sprite.getX()+sxtemp, sprite.getY()+sytemp-768));
         }
+        sx = sxtemp; sy = sytemp;
         g.setColor(Color.black);
         g.fillRect(0, 0, 128, 96);
         for (Sprite sprite : sprites) {
