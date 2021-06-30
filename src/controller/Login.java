@@ -6,7 +6,7 @@ import model.World;
 public class Login {
     private final LoginWorld loginWorld;
     GameLoop.View view;
-    GameLoop gameLoop;
+    public GameLoop gameLoop;
 
     public Login(LoginWorld loginWorld) {
         this.loginWorld = loginWorld;

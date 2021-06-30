@@ -4,6 +4,7 @@ import knight.Knight;
 import media.AudioPlayer;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class LoginWorld {
     private Image background;
     int sx, sy; // left-down corner's axis of background
     public static final String BGM = "loginbgm";
+    public Clip clip;
 
     public LoginWorld(String backgroundName) {
         try {
@@ -31,7 +33,10 @@ public class LoginWorld {
         // int imgW = background.getWidth(null), imgH = background.getHeight(null);
         sx = 0;
         sy = background.getHeight(null);
-        AudioPlayer.playSoundsloop(BGM);
+    }
+
+    public void playSound() {
+        clip = AudioPlayer.playSoundsloop(BGM);
     }
 
     public void update() {

@@ -4,6 +4,7 @@ import knight.Knight;
 import media.AudioPlayer;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
     public static final String BGM = "bgm";
+    private Clip clip;
 
     public World(String backgroundName, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
@@ -38,7 +40,10 @@ public class World {
         this.collisionHandler = collisionHandler;
         addSprite(player);
         addSprites(sprites);
-        AudioPlayer.playSoundsloop(BGM);
+    }
+
+    public void playSound() {
+        clip = AudioPlayer.playSoundsloop(BGM);
     }
 
     public void update() {
