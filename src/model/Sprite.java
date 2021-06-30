@@ -71,6 +71,16 @@ public abstract class Sprite {
                 offset.height + location.y), size);
     }
 
+    public Rectangle getAttackArea(Dimension offset, Dimension size) {
+        if (face == Direction.LEFT) {
+            Rectangle range = getRange();
+            return new Rectangle(new Point(location.x + range.width - offset.width - size.width,
+                    offset.height + location.y), size);
+        }
+        return new Rectangle(new Point(offset.width + location.x,
+                offset.height + location.y), size);
+    }
+
     public boolean isAlive() {
         return world != null;
     }
