@@ -162,7 +162,7 @@ public class GameView extends JFrame {
             g.fillRect(0, 0, GameView.WIDTH, GameView.HEIGHT);
 
             if(world != null) world.render(g); // ask the world to paint itself and paint the sprites on the canvas
-            else loginWorld.render(g);
+            else if(loginWorld != null) loginWorld.render(g);
         }
     }
 }
