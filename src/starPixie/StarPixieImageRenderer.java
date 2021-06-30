@@ -1,22 +1,22 @@
-package ironBoar;
+package starPixie;
 
 import fsm.ImageRenderer;
 import model.Direction;
 
 import java.awt.*;
 
-public class IronBoarImageRenderer implements ImageRenderer {
-    protected IronBoar ironBoar;
+public class StarPixieImageRenderer implements ImageRenderer {
+    protected StarPixie starPixie;
 
-    public IronBoarImageRenderer(IronBoar ironBoar){
-         this.ironBoar = ironBoar;
+     public StarPixieImageRenderer(StarPixie starPixie){
+         this.starPixie = starPixie;
      }
 
     @Override
     public void render(Image image, Graphics g) {
-        Direction face = ironBoar.getFace();
-        Rectangle range = ironBoar.getRange();
-        Rectangle body = ironBoar.getBody();
+        Direction face = starPixie.getFace();
+        Rectangle range = starPixie.getRange();
+        Rectangle body = starPixie.getBody();
         if (face == Direction.RIGHT) {
             g.drawImage(image, range.x + range.width, range.y, -range.width, range.height, null);
         } else {

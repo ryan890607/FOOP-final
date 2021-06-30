@@ -1,11 +1,10 @@
-package ironBoar;
+package starPixie;
 
 
 import fsm.FiniteStateMachine;
 import fsm.ImageRenderer;
 import fsm.State;
 import fsm.WaitingPerFrame;
-import media.AudioPlayer;
 import model.*;
 
 import java.awt.*;
@@ -16,9 +15,9 @@ import static fsm.FiniteStateMachine.Transition.from;
 import static model.Direction.LEFT;
 import static model.Direction.RIGHT;
 import static utils.ImageStateUtils.imageStatesFromFolder;
-import static ironBoar.IronBoar.Event.*;
+import static starPixie.StarPixie.Event.*;
 
-public class IronBoar extends HealthPointSprite implements Dangerous {
+public class StarPixie extends HealthPointSprite implements Dangerous {
     public static final int HP = 1000;
 
     private final SpriteShape shape;
@@ -29,15 +28,14 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
     private Direction responseDirection;
     private Direction walkingDirection;
     private Sprite target;
-    public static final String WAIL = "wail";
 
 
 
     public enum Event {
-        WALK, STOP, DAMAGED, DIE, ATTACK, JUMP
+        WALK, STOP, DAMAGED, DIE, ATTACK, JUMP, APPROACH
     }
 
-    public IronBoar(int damage, Point location) {
+    public StarPixie(int damage, Point location) {
         super(HP);
         this.damage = damage;
         this.location = location;
@@ -47,17 +45,19 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
         fsm = new FiniteStateMachine();
         fsm_jump = new FiniteStateMachine();
 
-        ImageRenderer imageRenderer = new IronBoarImageRenderer(this);
+        ImageRenderer imageRenderer = new StarPixieImageRenderer(this);
         State idle = new WaitingPerFrame(8,
-                new Idle(this, imageStatesFromFolder("assets/monster/Iron_Boar/idle", imageRenderer)));
+                new Idle(this, imageStatesFromFolder("assets/monster/Star_Pixie/idle", imageRenderer)));
         State walking = new WaitingPerFrame(2,
-                new Walking(this, imageStatesFromFolder("assets/monster/Iron_Boar/walking", imageRenderer)));
+                new Walking(this, imageStatesFromFolder("assets/monster/Star_Pixie/walking", imageRenderer)));
         State damaged = new WaitingPerFrame(2,
-                new Damaged(this, imageStatesFromFolder("assets/monster/Iron_Boar/damaged", imageRenderer)));
+                new Damaged(this, imageStatesFromFolder("assets/monster/Star_Pixie/damaged", imageRenderer)));
         State die = new WaitingPerFrame(6,
-                new Die(this, imageStatesFromFolder("assets/monster/Iron_Boar/die", imageRenderer)));
-        State attacking = new WaitingPerFrame(2,
-                new Attack(this, imageStatesFromFolder("assets/monster/Iron_Boar/walking", imageRenderer)));
+                new Die(this, imageStatesFromFolder("assets/monster/Star_Pixie/die", imageRenderer)));
+        State attacking = new WaitingPerFrame(12,
+                new Attacking(this, imageStatesFromFolder("assets/monster/Star_Pixie/attack", imageRenderer)));
+        State approaching = new WaitingPerFrame(2,
+                new Approaching(this, imageStatesFromFolder("assets/monster/Star_Pixie/walking", imageRenderer)));
         State wait = new WaitingPerFrame(2,
                 new Wait(this));
         State jump = new WaitingPerFrame(2,
@@ -72,7 +72,8 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(damaged).when(ATTACK).to(attacking));
         fsm.addTransition(from(attacking).when(DIE).to(die));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
-
+        fsm.addTransition(from(attacking).when(APPROACH).to(approaching));
+        fsm.addTransition(from(approaching).when(ATTACK).to(attacking));
         fsm_jump.setInitialState(wait);
         fsm_jump.addTransition(from(wait).when(JUMP).to(jump));
     }
@@ -85,6 +86,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
         fsm.trigger(ATTACK);
     }
 
+    public void approach(){ fsm.trigger(APPROACH); }
 
     public int getDamage() {
         return damage;
@@ -114,7 +116,6 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
     @Override
     public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
         hpBar.onDamaged(attacker, damageArea, damage);
-        AudioPlayer.playSounds(WAIL);
         setTarget(attacker);
         if (hpBar.isHarmless(damage))
             setResponseDirection(null);
@@ -167,7 +168,6 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
     }
 
     public void jump(){
-//        AudioPlayer.playSounds(GET_ATTACK);
         fsm_jump.trigger(JUMP);
     }
 }

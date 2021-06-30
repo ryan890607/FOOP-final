@@ -5,6 +5,7 @@ import knight.KnightCollisionHandler;
 import knight.Walking;
 import model.HealthPointSprite;
 import model.World;
+import starPixie.StarPixie;
 import views.GameView;
 import ironBoar.IronBoar;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class Main {
         Knight p2 = new Knight(150, new Point(300, 300+768));
         IronBoar m1 = new IronBoar(30, new Point(300, 150));
         IronBoar m2 = new IronBoar(30, new Point(500, 150));
-        IronBoar m3 = new IronBoar(30, new Point(300, 350));
+        StarPixie m3 = new StarPixie(30, new Point(300, 350));
         World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
 
         Game game = new Game(world, p1, p2);  // controller
