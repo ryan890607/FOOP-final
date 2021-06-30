@@ -51,6 +51,10 @@ public class Obstacle2 extends Obstacle {
 		else if (this.location.x + this.size.width - body.x < 210 && body.y + body.height - this.location.y < 90)
 			return;
 	    }
+	    from.setLocation(originalLocation);
+	}
+}
+	    
 	/*
 	    Rectangle range = from.getRange();
             int offsetLeft = range.x + range.width - this.getLocation().x;
@@ -88,13 +92,12 @@ public class Obstacle2 extends Obstacle {
 	    if (offsetDown == min)
                 from.setLocation(new Point(from.getX(), from.getY() + offsetDown));
 	*/  
-	    
+	   
+	    //Rectangle range = from.getRange();
+	    //Point newPoint = new Point(2 * originalLocation.x - range.x, 2 * originalLocation.y - range.y);
+            //from.setLocation(newPoint);
+        
 
-	    Rectangle range = from.getRange();
-	    Point newPoint = new Point(2 * originalLocation.x - range.x, 2 * originalLocation.y - range.y);
-            from.setLocation(newPoint);
-        }
-}
         /*    
 	 *  if (from instanceof Knight) {
                 Rectangle body = from.getBody();

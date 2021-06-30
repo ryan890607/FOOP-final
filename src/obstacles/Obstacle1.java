@@ -14,7 +14,7 @@ public class Obstacle1 extends Obstacle {
 	
 	public Obstacle1(String path, Point place, Direction d) {
 	    this.location = place;
-	    this.size = new Dimension(2000, 90);
+	    this.size = new Dimension(2048, 90);
 	    this.face = d;
             try {
                 this.image = ImageIO.read(new File(path));
@@ -41,11 +41,11 @@ public class Obstacle1 extends Obstacle {
 	}
 
 	public void collisionHandler(Point originalLocation, Sprite from) {
-            //from.setLocation(originalLocation);
+            from.setLocation(originalLocation);
             
-            Rectangle range = from.getRange();
-	    Point newPoint = new Point(range.x + 2 * (originalLocation.x - range.x), range.y + 2 * (originalLocation.y - range.y));
-            from.setLocation(newPoint);
+            //Rectangle range = from.getRange();
+	    //Point newPoint = new Point(range.x + 2 * (originalLocation.x - range.x), range.y + 2 * (originalLocation.y - range.y));
+            //from.setLocation(newPoint);
 
 	    /*
             int offsetLeft = range.x + range.width - this.getLocation().x;
