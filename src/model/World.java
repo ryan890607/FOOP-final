@@ -14,24 +14,35 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 
+import obstacles.Obstacle1;
+import obstacles.Obstacle2;
+import obstacles.Obstacle3;
+import java.util.ArrayList;
+
 /**
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class World {
     private Image background;
+    private List<Obstacle1> floors;
+    private List<Obstacle2> stairs;
+    private List<Obstacle3> rocks;
     int sx, sy; // left-down corner's axis of background
     private Knight player;
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
     public static final String BGM = "bgm";
 
-    public World(String backgroundName, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
+    public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
             background = ImageIO.read(new File(backgroundName));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         // int imgW = background.getWidth(null), imgH = background.getHeight(null);
+        this.floors = floors;
+	this.stairs = stairs;
+	this.rocks = rocks;
         sx = 0;
         sy = background.getHeight(null);
         this.player = player;
@@ -98,6 +109,27 @@ public class World {
                 collisionHandler.handle(originalLocation, from, to);
             }
         }
+        
+        for (Obstacle1 to : floors) {
+	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
+            if (body.intersects(range)) {
+                to.collisionHandler(originalLocation, from);
+            }
+        }
+
+        for (Obstacle2 to : stairs) {
+	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
+            if (body.intersects(range)) {
+                to.collisionHandler(originalLocation, from);
+            }
+        }
+
+        for (Obstacle3 to : rocks) {
+	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
+            if (body.intersects(range)) {
+                to.collisionHandler(originalLocation, from);
+            }
+        }
     }
 
     public void jump(Sprite from, Dimension offset) {
@@ -109,6 +141,27 @@ public class World {
         for (Sprite to : sprites) {
             if (to != from && body.intersects(to.getBody())) {
                 collisionHandler.handle(originalLocation, from, to);
+            }
+        }
+        
+        for (Obstacle1 to : floors) {
+	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
+            if (body.intersects(range)) {
+                to.collisionHandler(originalLocation, from);
+            }
+        }
+
+        for (Obstacle2 to : stairs) {
+	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
+            if (body.intersects(range)) {
+                to.collisionHandler(originalLocation, from);
+            }
+        }
+
+        for (Obstacle3 to : rocks) {
+	    Rectangle range = new Rectangle(to.getLocation(), to.getSize());
+            if (body.intersects(range)) {
+                to.collisionHandler(originalLocation, from);
             }
         }
     }
@@ -132,6 +185,26 @@ public class World {
     public void render(Graphics g) {
         int sxtemp = sx, sytemp = sy;
         g.drawImage(background, 0, 0, 1024, 768, sxtemp, sytemp-768, sxtemp+1024, sytemp, null);
+        
+        for (Obstacle1 obstacle : floors) {
+	    Rectangle range = new Rectangle(obstacle.getLocation(), obstacle.getSize());
+            g.drawImage(obstacle.getImage(), range.x - sx              , range.y - sy + 768, range.width, range.height, null);
+            //g.drawImage(obstacle, 666, 444, obstacle.getWidth(), obstacle.getHeight(), null);
+	}
+	for (Obstacle2 stair : stairs) {
+	    Rectangle range = new Rectangle(stair.getLocation(), stair.getSize());
+            if (stair.getFace() == Direction.RIGHT) {
+                g.drawImage(stair.getImage(), range.x + range.width - sx, range.y - sy + 768, -range.width, range.height, null);
+            } else {
+                g.drawImage(stair.getImage(), range.x - sx              , range.y - sy + 768, range.width, range.height, null);
+            }
+            //g.drawImage(obstacle, 666, 444, obstacle.getWidth(), obstacle.getHeight(), null);
+	}
+	for (Obstacle3 obstacle : rocks) {
+	    Rectangle range = new Rectangle(obstacle.getLocation(), obstacle.getSize());
+            g.drawImage(obstacle.getImage(), range.x - sx              , range.y - sy + 768, range.width, range.height, null);
+	}
+	
         for (Sprite sprite : sprites) {
             //System.out.println(sprite.location);
             //System.out.printf("%d %d\n", sxtemp, sytemp);
