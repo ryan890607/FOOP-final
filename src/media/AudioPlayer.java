@@ -31,4 +31,15 @@ public class AudioPlayer {
         }
     }
 
+    public static void playSoundsloop(Object audioName) {
+        try {
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(sounds.get(audioName)));
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

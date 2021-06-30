@@ -1,6 +1,7 @@
 package model;
 
 import knight.Knight;
+import media.AudioPlayer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class World {
     private Knight player;
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
+    public static final String BGM = "bgm";
 
     public World(String backgroundName, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
@@ -36,6 +38,7 @@ public class World {
         this.collisionHandler = collisionHandler;
         addSprite(player);
         addSprites(sprites);
+        AudioPlayer.playSoundsloop(BGM);
     }
 
     public void update() {
