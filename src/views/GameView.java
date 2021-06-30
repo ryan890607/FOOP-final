@@ -57,7 +57,7 @@ public class GameView extends JFrame {
                             break;
                         }
                         switch (login.getWorld().state) {
-                            case 0, 3:
+                            case 0: case 3:
                                 if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 1;
                                 break;
                             case 1:
