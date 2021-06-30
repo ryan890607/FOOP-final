@@ -26,11 +26,12 @@ public class Main {
 
         // initialization
 
-        Knight p1 = new Knight(100, new Point(0, 400+768));
+        Knight p1 = new Knight(150, new Point(0, 400+768));
         Knight p2 = new Knight(150, new Point(300, 300+768));
         IronBoar m1 = new IronBoar(30, new Point(300, 150));
-
-        World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2, m1);  // model
+        IronBoar m2 = new IronBoar(30, new Point(500, 150));
+        IronBoar m3 = new IronBoar(30, new Point(300, 350));
+        World world = new World("assets/backgound/fallguys4times.jpg", new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
 
         Game game = new Game(world, p1, p2);  // controller
         GameView view = new GameView(game);  // view

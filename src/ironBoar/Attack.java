@@ -19,8 +19,10 @@ public class Attack extends CyclicSequence {
         if (ironBoar.isAlive()) {
             super.update();
             if (ironBoar.getX() < ironBoar.getTarget().getX()){
+                ironBoar.setFace(Direction.RIGHT);
                 ironBoar.getWorld().move(ironBoar, Direction.RIGHT.translate());
             } else {
+                ironBoar.setFace(Direction.LEFT);
                 ironBoar.getWorld().move(ironBoar, Direction.LEFT.translate());
             }
         }

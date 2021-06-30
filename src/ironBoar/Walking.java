@@ -2,7 +2,7 @@ package ironBoar;
 
 import fsm.CyclicSequence;
 import fsm.ImageState;
-import model.Direction;
+
 
 import java.util.List;
 import java.util.Random;

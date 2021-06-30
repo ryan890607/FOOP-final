@@ -7,7 +7,6 @@ import fsm.StateMachine;
 import java.util.List;
 
 public class Damaged extends Sequence {
-    private StateMachine stateMachine;
     private IronBoar ironBoar;
     private final int STEP = 15;
     private int step = STEP;

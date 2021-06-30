@@ -25,6 +25,7 @@ public class IronBoar extends HealthPointSprite {
 
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
+    private final FiniteStateMachine fsm_jump;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
     private Direction responseDirection;
@@ -32,8 +33,9 @@ public class IronBoar extends HealthPointSprite {
     private Sprite target;
 
 
+
     public enum Event {
-        WALK, STOP, DAMAGED, DIE, ATTACK;
+        WALK, STOP, DAMAGED, DIE, ATTACK, JUMP
     }
 
     public IronBoar(int damage, Point location) {
@@ -44,6 +46,7 @@ public class IronBoar extends HealthPointSprite {
         shape = new SpriteShape(new Dimension(146, 176),
                 new Dimension(33, 38), new Dimension(66, 105));
         fsm = new FiniteStateMachine();
+        fsm_jump = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new IronBoarImageRenderer(this);
         State idle = new WaitingPerFrame(8,
@@ -56,6 +59,10 @@ public class IronBoar extends HealthPointSprite {
                 new Die(this, imageStatesFromFolder("assets/monster/Iron_Boar/die", imageRenderer)));
         State attacking = new WaitingPerFrame(2,
                 new Attack(this, imageStatesFromFolder("assets/monster/Iron_Boar/walking", imageRenderer)));
+        State wait = new WaitingPerFrame(2,
+                new Wait(this));
+        State jump = new WaitingPerFrame(2,
+                new Jump(this, fsm_jump));
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
@@ -66,6 +73,9 @@ public class IronBoar extends HealthPointSprite {
         fsm.addTransition(from(damaged).when(ATTACK).to(attacking));
         fsm.addTransition(from(attacking).when(DIE).to(die));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
+
+        fsm_jump.setInitialState(wait);
+        fsm_jump.addTransition(from(wait).when(JUMP).to(jump));
     }
 
     public void setTarget(Sprite target) {
@@ -93,6 +103,7 @@ public class IronBoar extends HealthPointSprite {
 
     public void update() {
         fsm.update();
+        fsm_jump.update();
     }
 
     @Override
@@ -155,5 +166,7 @@ public class IronBoar extends HealthPointSprite {
         return target;
     }
 
-
+    public void jump(){
+        fsm_jump.trigger(JUMP);
+    }
 }
