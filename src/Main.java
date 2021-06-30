@@ -5,6 +5,7 @@ import knight.Attacking;
 import knight.Knight;
 import knight.KnightCollisionHandler;
 import knight.Walking;
+import model.Direction;
 import model.HealthPointSprite;
 import model.LoginWorld;
 import model.World;
@@ -41,36 +42,35 @@ public class Main {
 
         Knight p1 = new Knight(150, new Point(0, 400+768));
         Knight p2 = new Knight(150, new Point(300, 300+768));
-        IronBoar m1 = new IronBoar(30, new Point(300, 150));
-        IronBoar m2 = new IronBoar(30, new Point(500, 150));
-        StarPixie m3 = new StarPixie(30, new Point(300, 350));
+        IronBoar m1 = new IronBoar(100, new Point(300, 150));
+        IronBoar m2 = new IronBoar(100, new Point(500, 150));
+        StarPixie m3 = new StarPixie(50, new Point(300, 350));
         
         int obstacleCount = 1;
-	Direction d = Direction.RIGHT;
-	ArrayList<Obstacle1> o1 = new ArrayList<Obstacle1>();
-	o1.add(new Obstacle1("assets/obstacle/Obstacle4.jpg", new Point(0, 1350), d));
-	
-	obstacleCount = 2;
-	d = Direction.LEFT;
-	ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
-	for (int i = 0; i < obstacleCount; i++) {
-	    o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((200+i*900)%2048, (250+i*700)%1536), d));
-	    if (d == Direction.RIGHT)
-	        d = Direction.LEFT;
-	    else
-	        d = Direction.RIGHT;
-	}
+	    Direction d = Direction.RIGHT;
+	    ArrayList<Obstacle1> o1 = new ArrayList<Obstacle1>();
+	    o1.add(new Obstacle1("assets/obstacle/Obstacle4.jpg", new Point(0, 1350), d));
 
-	obstacleCount = 2;
-	d = Direction.LEFT;
-	ArrayList<Obstacle3> o3 = new ArrayList<Obstacle3>();
-	for (int i = 0; i < obstacleCount; i++) {
-	    o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680+i*800)%2048, (950+i*1200)%1536), d));
-	    if (d == Direction.RIGHT)
-	        d = Direction.LEFT;
-	    else
-	        d = Direction.RIGHT;
-	}
+	    obstacleCount = 2;
+	    d = Direction.LEFT;
+    	ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
+	    for (int i = 0; i < obstacleCount; i++) {
+	        o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((200+i*900)%2048, (250+i*700)%1536), d));
+	        if (d == Direction.RIGHT)  d = Direction.LEFT;
+	        else
+	            d = Direction.RIGHT;
+	    }
+
+	    obstacleCount = 2;
+	    d = Direction.LEFT;
+	    ArrayList<Obstacle3> o3 = new ArrayList<Obstacle3>();
+	    for (int i = 0; i < obstacleCount; i++) {
+	        o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680+i*800)%2048, (950+i*1200)%1536), d));
+	        if (d == Direction.RIGHT)
+	            d = Direction.LEFT;
+	        else
+	            d = Direction.RIGHT;
+	    }
 	
         World world = new World("assets/background/fallguys4times.jpg", o1, o2, o3, new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
         LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.jpg");
