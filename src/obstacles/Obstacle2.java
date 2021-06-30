@@ -41,17 +41,19 @@ public class Obstacle2 extends Obstacle {
 	public void collisionHandler(Point originalLocation, Sprite from) {
 	    Rectangle body = from.getBody();
 	    if (this.face == Direction.LEFT) {
-	        if (body.x + body.width - this.location.x < 105 && body.y + body.height - this.location.y < 175)
+	        if (body.x + body.width - this.location.x < 105 && body.y + body.height - this.location.y < 165)
 			return;
-		else if (body.x + body.width - this.location.x < 210 && body.y + body.height - this.location.y < 90)
+		else if (body.x + body.width - this.location.x < 210 && body.y + body.height - this.location.y < 75)
 			return;
 	    } else {
-	        if (this.location.x + this.size.width - body.x < 105 && body.y + body.height - this.location.y < 170)
+	        if (this.location.x + this.size.width - body.x < 105 && body.y + body.height - this.location.y < 165)
 			return;
-		else if (this.location.x + this.size.width - body.x < 210 && body.y + body.height - this.location.y < 90)
+		else if (this.location.x + this.size.width - body.x < 210 && body.y + body.height - this.location.y < 75)
 			return;
 	    }
 	    from.setLocation(originalLocation);
+	    if (from instanceof Knight)
+	        ((Knight)from).fallCount = -1;
 	}
 }
 	    
