@@ -73,7 +73,7 @@ public class Main {
 	    }
 	
         World world = new World("assets/background/fallguys4times.jpg", o1, o2, o3, new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
-        LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.jpg");
+        LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.png");
 
         Game game = new Game(world, p1, p2);  // controller
 
