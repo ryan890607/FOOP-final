@@ -51,10 +51,16 @@ public class GameView extends JFrame {
             public void keyPressed(KeyEvent keyEvent) {
                 switch (gameLoop.running) {
                     case 0:
+                        setFocusTraversalKeysEnabled(false);
+                        if(keyEvent.getKeyCode() == keyEvent.VK_ENTER) {
+                            login.loginSuccess();
+                            break;
+                        }
                         switch (login.getWorld().state) {
                             case 0, 3:
                                 break;
                             case 1:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 2;
                                 if(Character.isLetterOrDigit(keyEvent.getKeyChar()))
                                     login.getWorld().account += keyEvent.getKeyChar();
                                 if(keyEvent.getKeyCode() == keyEvent.VK_BACK_SPACE && login.getWorld().account.length() > 0)

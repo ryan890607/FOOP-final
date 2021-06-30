@@ -23,7 +23,7 @@ public class LoginWorld {
     int sx, sy; // left-down corner's axis of background
     public static final String BGM = "loginbgm";
     public Clip clip;
-    public int state = 0;
+    public int state = 1;
     public String account = "", password = "";
 
     public LoginWorld(String backgroundName) {
@@ -65,10 +65,11 @@ public class LoginWorld {
                 break;
         }
         g.setColor(Color.black);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 12));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         g.drawString(account, 565, 320);
         String temp = "";
         for(int i = 0; i < password.length(); ++i) temp += '*';
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 14));
         g.drawString(temp, 565, 360);
     }
 }
