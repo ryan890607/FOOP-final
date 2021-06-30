@@ -40,7 +40,7 @@ public class Game {
     }
 
     public void jump(int playerNumber) {
-        if(getPlayer(playerNumber).jumpStep < 0) getPlayer(playerNumber).jump(0);
+        if(getPlayer(playerNumber).jumpStep < 0 && getPlayer(playerNumber).fallCount < 0) getPlayer(playerNumber).jump(0);
     }
 
     public Knight getPlayer(int playerNumber) {
