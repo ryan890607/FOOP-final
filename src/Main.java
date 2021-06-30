@@ -24,6 +24,8 @@ public class Main {
         addAudioByFilePath(Attacking.AUDIO_SWORD_CLASH_2, new File("assets/audio/sword-clash2.wav"));
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
         addAudioByFilePath(World.BGM, new File("assets/audio/background_BGM.wav"));
+//        addAudioByFilePath(IronBoar.GET_ATTACK, new File("assets/audio/jump.wav"));
+        addAudioByFilePath(Knight.JUMP, new File("assets/audio/jump.wav"));
 
         // initialization
 

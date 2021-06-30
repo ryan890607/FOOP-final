@@ -5,6 +5,7 @@ import fsm.FiniteStateMachine;
 import fsm.ImageRenderer;
 import fsm.State;
 import fsm.WaitingPerFrame;
+import media.AudioPlayer;
 import model.Direction;
 import model.HealthPointSprite;
 import model.Sprite;
@@ -31,6 +32,7 @@ public class IronBoar extends HealthPointSprite {
     private Direction responseDirection;
     private Direction walkingDirection;
     private Sprite target;
+//    public static final String GET_ATTACK = "get_attack";
 
 
 
@@ -167,6 +169,7 @@ public class IronBoar extends HealthPointSprite {
     }
 
     public void jump(){
+//        AudioPlayer.playSounds(GET_ATTACK);
         fsm_jump.trigger(JUMP);
     }
 }

@@ -4,6 +4,7 @@ import fsm.FiniteStateMachine;
 import fsm.ImageRenderer;
 import fsm.State;
 import fsm.WaitingPerFrame;
+import media.AudioPlayer;
 import model.Direction;
 import model.HealthPointSprite;
 import model.SpriteShape;
@@ -31,6 +32,7 @@ public class Knight extends HealthPointSprite {
     private final int damage;
     public int jumpStep;
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
+    public static final String JUMP = "jump";
 
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED
@@ -101,6 +103,7 @@ public class Knight extends HealthPointSprite {
 
     public void jump(int now) {
         if(now < 0) return;
+        if(now == 0) AudioPlayer.playSounds(JUMP);
         world.jump(this, new Dimension(0, jumpSequence.get(now)));
         jumpStep = now == jumpSequence.size()-1? -1:now+1;
     }
