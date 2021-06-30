@@ -76,5 +76,4 @@ public abstract class Sprite {
 
     public Direction getResponseDirection(){ return null; };
 
-
 }

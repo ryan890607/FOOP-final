@@ -31,6 +31,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
 
 
 
+
     public enum Event {
         WALK, STOP, DAMAGED, DIE, ATTACK, JUMP, APPROACH
     }
@@ -54,7 +55,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
                 new Damaged(this, imageStatesFromFolder("assets/monster/Star_Pixie/damaged", imageRenderer)));
         State die = new WaitingPerFrame(6,
                 new Die(this, imageStatesFromFolder("assets/monster/Star_Pixie/die", imageRenderer)));
-        State attacking = new WaitingPerFrame(12,
+        State attacking = new WaitingPerFrame(24,
                 new Attacking(this, imageStatesFromFolder("assets/monster/Star_Pixie/attack", imageRenderer)));
         State approaching = new WaitingPerFrame(2,
                 new Approaching(this, imageStatesFromFolder("assets/monster/Star_Pixie/walking", imageRenderer)));
@@ -77,6 +78,8 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
         fsm_jump.setInitialState(wait);
         fsm_jump.addTransition(from(wait).when(JUMP).to(jump));
     }
+
+
 
     public void setTarget(Sprite target) {
         this.target = target;

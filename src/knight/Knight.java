@@ -7,6 +7,7 @@ import fsm.WaitingPerFrame;
 import media.AudioPlayer;
 import model.Direction;
 import model.HealthPointSprite;
+import model.Sprite;
 import model.SpriteShape;
 
 import java.awt.*;
@@ -25,7 +26,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Knight extends HealthPointSprite {
-    public static final int KNIGHT_HP = 500;
+    public static final int KNIGHT_HP = 2000;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -33,7 +34,7 @@ public class Knight extends HealthPointSprite {
     public int jumpStep;
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
     public static final String JUMP = "jump";
-
+    private Direction responseDirection;
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED
     }
@@ -53,12 +54,16 @@ public class Knight extends HealthPointSprite {
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
         State attacking = new WaitingPerFrame(5,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
-
+        State damaged = new WaitingPerFrame(2,
+                new Damaged(this, fsm, imageStatesFromFolder("assets/damaged", imageRenderer)));
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(ATTACK).to(attacking));
         fsm.addTransition(from(walking).when(ATTACK).to(attacking));
+        fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
+        fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
+        fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
 
         jumpStep = -1;
         int size = jumpSequence.size();
@@ -138,5 +143,25 @@ public class Knight extends HealthPointSprite {
         return shape.bodySize;
     }
 
+    @Override
+    public void setResponseDirection(Direction responseDirection) {
+        this.responseDirection = responseDirection;
+    }
+
+    @Override
+    public Direction getResponseDirection() {
+        return responseDirection;
+    }
+
+    @Override
+    public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
+        if (fsm.currentState() instanceof Damaged) return;
+        super.onDamaged(attacker, damageArea, damage);
+        fsm.trigger(DAMAGED);
+    }
+
+    public boolean isBeingDamaged(){
+        return fsm.currentState().toString().equals("Damaged");
+    }
 
 }

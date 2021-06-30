@@ -66,13 +66,18 @@ public class Attacking extends Sequence {
     }
 
     private Rectangle damageArea() {
-        return knight.getArea(new Dimension(87, 70),
-                new Dimension(55, 88));
+        return knight.getArea(new Dimension(87+15, 70),
+                new Dimension(70, 88));
     }
 
     @Override
     protected void onSequenceEnd() {
         currentPosition = 0;
         stateMachine.reset();
+    }
+
+    @Override
+    public String toString() {
+        return "Attacking";
     }
 }

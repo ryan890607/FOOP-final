@@ -21,13 +21,15 @@ public class Magic extends Sprite implements Dangerous {
     private State ending;
     private ImageRenderer imageRenderer;
     private final SpriteShape shape;
+    private int damage;
 
-    public Magic(Point start, Point end, String folderName){
+    public Magic(Point start, Point end, String folderName, int damage){
+        this.damage = damage;
         setLocation(start);
         this.end = end;
         setFace(start.x > end.x ? Direction.LEFT : Direction.RIGHT);
         shape = new SpriteShape(new Dimension(100, 100),
-                new Dimension(5, 8), new Dimension(30, 20));
+                new Dimension(50, 50), new Dimension(50, 50));
         imageRenderer = new MagicImageRenderer(this);
         attacking = new WaitingPerFrame(2,
                 new Attacking(this, imageStatesFromFolder(folderName + "/magic", imageRenderer)));
@@ -35,8 +37,8 @@ public class Magic extends Sprite implements Dangerous {
                 new Ending(this, imageStatesFromFolder(folderName + "/magic_end", imageRenderer)));
         currentState = attacking;
     }
-    public void attack(){
-
+    public int getDamage(){
+        return damage;
     }
     public void goEnding(){
         this.currentState = ending;
@@ -76,5 +78,9 @@ public class Magic extends Sprite implements Dangerous {
     @Override
     public Dimension getBodySize() {
         return shape.bodySize;
+    }
+
+    public void inform(){
+        goEnding();
     }
 }
