@@ -63,6 +63,9 @@ public class LoginWorld {
                 g.setColor(Color.white);
                 g.fillRect(557, 340, 195, 31);
                 break;
+            case 3:
+                g.setColor(Color.white);
+                g.drawRect(765, 310, 100, 43);
         }
         g.setColor(Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 14));

@@ -58,6 +58,7 @@ public class GameView extends JFrame {
                         }
                         switch (login.getWorld().state) {
                             case 0, 3:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 1;
                                 break;
                             case 1:
                                 if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 2;
@@ -67,6 +68,7 @@ public class GameView extends JFrame {
                                     login.getWorld().account = login.getWorld().account.substring(0, login.getWorld().account.length()-1);
                                 break;
                             case 2:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 3;
                                 if(Character.isLetterOrDigit(keyEvent.getKeyChar()))
                                     login.getWorld().password += keyEvent.getKeyChar();
                                 if(keyEvent.getKeyCode() == keyEvent.VK_BACK_SPACE && login.getWorld().password.length() > 0)
