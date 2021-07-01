@@ -1,6 +1,7 @@
 package model;
 
 import boss.Boss;
+import knight.HealthPointBar;
 import knight.Knight;
 import media.AudioPlayer;
 
@@ -73,6 +74,7 @@ public class World {
         for (Sprite sprite : sprites) {
             sprite.update();
         }
+        if(player.exp >= player.lv*100) player.LVup();
         // adjust position
         if(player.getX() <= 300) {
             sx = 0;
@@ -279,8 +281,54 @@ public class World {
         g.setColor(Color.black);
         g.drawOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
 
-
         g.drawImage(pause, 950, 0, null);
+
+        g.setColor(Color.pink);
+        g.fillRect(350, 650, 300, 80);
+        g.setColor(Color.black);
+        g.drawRect(350, 650, 300, 80);
+        Image pl;
+        try {
+            pl = ImageIO.read(new File("assets/others/player.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        g.drawImage(pl, 365, 655, null);
+        g.setColor(Color.black);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 16));
+        g.drawString("LV. " + player.lv, 415, 700); //player.exp + "/" + player.lv*100
+        g.drawString("exp ", 480, 675);
+
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+        g.setColor(Color.GRAY);
+        g.fillRect(510, 660, 120, 15);
+        g.setColor(Color.YELLOW);
+        g.fillRect(510, 660, (int) (player.exp * 120 / (player.lv*100)), 15);
+        g.setColor(Color.BLACK);
+        g.drawRect(510, 660, 120, 15);
+        g.drawString(player.exp + "/" + player.lv*100, 520, 675);
+
+        HealthPointBar hpBar = player.hpBar;
+        int width = (int) (hpBar.getHp() * 120 / player.KNIGHT_HP);
+        int widthMp = (int) (hpBar.getMp() * 120 / player.KNIGHT_MP);
+        g.setColor(Color.RED);
+        g.fillRect(510, 685, 120, 15);
+        g.setColor(Color.GREEN);
+        g.fillRect(510, 685, width, 15);
+        g.setColor(Color.WHITE);
+        g.fillRect(510, 705, 120, 15);
+        g.setColor(Color.BLUE);
+        g.fillRect(510, 705, widthMp, 15);
+        g.setColor(Color.black);
+        g.drawRect(510, 685, 120, 15);
+        g.drawRect(510, 705, 120, 15);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+        g.setColor(Color.black);
+        g.drawString("HP ", 480, 700);
+        g.drawString("MP ", 480, 720);
+        g.drawString(hpBar.getHp() + "/" + player.KNIGHT_HP, 520, 700);
+        g.drawString(hpBar.getMp() + "/" + player.KNIGHT_MP, 520, 720);
+
     }
 
     public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {

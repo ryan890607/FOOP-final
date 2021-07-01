@@ -98,4 +98,11 @@ public class HealthPointBar extends Sprite {
     public int getHp(){
         return hp;
     }
+    public int getMp() {
+        return mp;
+    }
+    public void addMp(int x){
+        mp += x;
+        if(mp > maxMp) mp = maxMp;
+    }
 }

@@ -31,7 +31,7 @@ public class Knight extends HealthPointSprite {
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
-    private final int damage;
+    private int damage;
     public int jumpLV;
     public int jumpStep;
     public int fallCount;
@@ -85,7 +85,7 @@ public class Knight extends HealthPointSprite {
         jumpStep = -1;
 	    fallCount = -1;
         int size = jumpSequence.size();
-        for(int i = size-2; i >= 0; --i) jumpSequence.add(-(jumpSequence.get(i)));
+        // for(int i = size-2; i >= 0; --i) jumpSequence.add(-(jumpSequence.get(i)));
     }
 
     public void attack() {
@@ -129,13 +129,14 @@ public class Knight extends HealthPointSprite {
         fsm.update();
 
         if(this.world == null) return;
+        hpBar.addMp(lv);
         jump(jumpStep);
         if (fallCount >= 0)
             fall(fallCount++);
-        if(getX() < 0) location.x = 0;
-        if(getY() < 0) location.y = 0;
-        if(getX() > world.getBackground().getWidth(null)-getBodySize().width) location.x = world.getBackground().getWidth(null)-getBodySize().width;
-        if(getY() > world.getBackground().getHeight(null)-getBodySize().height) location.y = world.getBackground().getHeight(null)-getBodySize().height;
+        if(getLocation().getX()+getBodyOffset().width < 0) location.x = -getBodyOffset().width;
+        if(getLocation().getY()+getBodyOffset().height < 0) location.y = -getBodyOffset().height;
+        if(getLocation().getX()+getBodyOffset().width > world.getBackground().getWidth(null)-getBodySize().width) location.x = world.getBackground().getWidth(null)-300+getBodyOffset().width;
+        if(getLocation().getY()+getBodyOffset().height > world.getBackground().getHeight(null)-getBodySize().height) location.y = world.getBackground().getHeight(null)-300+getBodyOffset().height;
     }
 
     public void jump(int now) {
@@ -161,7 +162,7 @@ public class Knight extends HealthPointSprite {
 
     @Override
     public void render(Graphics g) {
-        super.render(g);
+        //super.render(g);
         fsm.render(g);
     }
 
@@ -222,8 +223,6 @@ public class Knight extends HealthPointSprite {
         hpBar.setMax(KNIGHT_HP, KNIGHT_MP);
         hpBar.setHp(KNIGHT_HP);
         hpBar.setMp(KNIGHT_MP);
+        damage += 100;
     }
-
-
-
 }
