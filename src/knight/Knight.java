@@ -85,7 +85,7 @@ public class Knight extends HealthPointSprite {
         jumpStep = -1;
 	    fallCount = -1;
         int size = jumpSequence.size();
-        for(int i = size-2; i >= 0; --i) jumpSequence.add(-(jumpSequence.get(i)));
+        // for(int i = size-2; i >= 0; --i) jumpSequence.add(-(jumpSequence.get(i)));
     }
 
     public void attack() {
