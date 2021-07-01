@@ -42,7 +42,8 @@ public class Obstacle3 extends Obstacle {
 
 	public void collisionHandler(Point originalLocation, Sprite from) {
             from.setLocation(originalLocation);
-	    if (from instanceof Knight)
+	    Rectangle body = from.getBody();
+	    if (from instanceof Knight && body.x + body.width > this.getLocation().x && body.x < this.getLocation().x + this.getSize().width)
 	        ((Knight)from).fallCount = -1;
             
             //Rectangle range = from.getRange();
