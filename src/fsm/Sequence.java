@@ -28,6 +28,7 @@ public abstract class Sequence implements State {
 
     @Override
     public void render(Graphics g) {
+        //System.out.println(currentPosition);
         states.get(currentPosition).render(g);
     }
 

@@ -38,6 +38,8 @@ public class Skill1 extends Sequence {
         }
     }
 
+
+
     @Override
     public String toString() {
         return "Skill1";

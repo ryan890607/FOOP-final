@@ -14,6 +14,7 @@ public class Ending extends Sequence {
     }
     @Override
     protected void onSequenceEnd() {
+        currentPosition = 0;
         magic.getWorld().removeSprite(magic);
     }
 }
