@@ -34,6 +34,7 @@ public class World {
     private final CollisionHandler collisionHandler;
     public static final String BGM = "bgm";
     private Clip clip;
+    private Image pause;
 
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
@@ -43,14 +44,20 @@ public class World {
         }
         // int imgW = background.getWidth(null), imgH = background.getHeight(null);
         this.floors = floors;
-	this.stairs = stairs;
-	this.rocks = rocks;
+        this.stairs = stairs;
+        this.rocks = rocks;
         sx = 0;
         sy = background.getHeight(null);
         this.player = player;
         this.collisionHandler = collisionHandler;
         addSprite(player);
         addSprites(sprites);
+
+        try {
+            pause = ImageIO.read(new File("assets/others/pause.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void playSound() {
@@ -74,7 +81,7 @@ public class World {
         if(sx < 0) sx = 0;
         if(sx > background.getWidth(null)-1024) sx = background.getWidth(null)-1024;
 
-        if(player.jumpStep >= 0) return;
+        //if(player.jumpStep >= 0) return;
 
         if(player.getY() >= background.getHeight(null)-300) {
             sy = background.getHeight(null);
@@ -238,5 +245,7 @@ public class World {
         g.setColor(Color.green);
         Point p = player.getLocation();
         g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
+
+        g.drawImage(pause, 950, 0, null);
     }
 }

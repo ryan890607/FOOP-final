@@ -22,6 +22,7 @@ public class Walking extends CyclicSequence {
     @Override
     public void update() {
         if (knight.isAlive()) {
+            if(knight.jumpStep >= 0) super.currentPosition = 10;
             super.update();
             for (Direction direction : knight.getDirections()) {
 		//if (direction != Direction.UP)
