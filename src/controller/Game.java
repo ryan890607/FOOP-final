@@ -10,15 +10,15 @@ import model.World;
  */
 public class Game {
     private final Knight p1;
-    private final Knight p2;
     private World world;
     GameLoop.View view;
     GameLoop gameLoop;
+    public int gameID;
 
-    public Game(World world, Knight p1, Knight p2) {
+    public Game(World world, Knight p1, int ID) {
         this.p1 = p1;
-        this.p2 = p2;
         this.world = world;
+        this.gameID = ID;
     }
 
     public void setGameLoop(GameLoop gameLoop) { this.gameLoop = gameLoop; }
@@ -53,7 +53,7 @@ public class Game {
     }
 
     public Knight getPlayer(int playerNumber) {
-        return playerNumber == 1 ? p1 : p2;
+        return playerNumber == 1 ? p1 : null;
     }
 
     public World getWorld() {
