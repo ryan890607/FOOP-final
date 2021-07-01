@@ -2,10 +2,7 @@ import controller.Game;
 import controller.GameLoop;
 import controller.Login;
 import controller.Pause;
-import knight.Attacking;
-import knight.Knight;
-import knight.KnightCollisionHandler;
-import knight.Walking;
+import knight.*;
 import model.*;
 import starPixie.StarPixie;
 import views.GameView;
@@ -36,7 +33,7 @@ public class Main {
         addAudioByFilePath(Knight.JUMP, new File("assets/audio/jump.wav"));
         addAudioByFilePath(LoginWorld.BGM, new File("assets/audio/LoginTheme.wav"));
 		addAudioByFilePath(IronBoar.DIE, new File("assets/audio/iron_die.wav"));
-		addAudioByFilePath(Knight.SKILL_I, new File("assets/audio/skill_i.wav"));
+		addAudioByFilePath(Skill_I.SKILL_I, new File("assets/audio/skill_i.wav"));
 
         // initialization
 
