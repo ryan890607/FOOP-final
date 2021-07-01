@@ -91,6 +91,9 @@ public class Boss extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(skill2).when(ATTACK).to(attacking));
         fsm.addTransition(from(skill3).when(ATTACK).to(attacking));
         fsm.addTransition(from(damaged).when(DIEQQ).to(die));
+        fsm.addTransition(from(skill1).when(DIEQQ).to(die));
+        fsm.addTransition(from(skill2).when(DIEQQ).to(die));
+        fsm.addTransition(from(skill3).when(DIEQQ).to(die));
         /*fsm_jump.setInitialState(wait);
         fsm_jump.addTransition(from(wait).when(JUMP).to(jump));*/
     }
