@@ -49,7 +49,7 @@ public class Knight extends HealthPointSprite {
         this.damage = damage;
         this.location = location;
         shape = new SpriteShape(new Dimension(300, 300),
-                new Dimension(67+30, 90), new Dimension(90, 90));
+                new Dimension(67+30+20, 100), new Dimension(69, 87));
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new KnightImageRenderer(this);

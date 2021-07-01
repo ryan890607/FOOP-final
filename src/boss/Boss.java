@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static fsm.FiniteStateMachine.Transition.from;
+import static ironBoar.IronBoar.Event.DIEQQ;
 import static model.Direction.LEFT;
 import static model.Direction.RIGHT;
 import static boss.Boss.Event.*;
@@ -89,6 +90,7 @@ public class Boss extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(skill1).when(ATTACK).to(attacking));
         fsm.addTransition(from(skill2).when(ATTACK).to(attacking));
         fsm.addTransition(from(skill3).when(ATTACK).to(attacking));
+        fsm.addTransition(from(damaged).when(DIEQQ).to(die));
         /*fsm_jump.setInitialState(wait);
         fsm_jump.addTransition(from(wait).when(JUMP).to(jump));*/
     }
