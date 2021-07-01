@@ -70,7 +70,7 @@ public class LoginWorld {
             case 4:
                 g.setColor(Color.red);
                 g.setFont(new Font("TimesRoman", Font.BOLD, 18));
-                g.drawString("帳號或密碼錯誤！", 565, 280);
+                g.drawString("Wrong username or password!", 565, 270);
                 break;
         }
         g.setColor(Color.black);
