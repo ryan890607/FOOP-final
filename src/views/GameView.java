@@ -4,11 +4,13 @@ import controller.Game;
 import controller.GameLoop;
 import controller.Login;
 import controller.Pause;
+import media.AudioPlayer;
 import model.Direction;
 import model.LoginWorld;
 import model.Sprite;
 import model.World;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -26,7 +28,7 @@ public class GameView extends JFrame {
     public static final int P1 = 1;
     public static final int P2 = 2;
     private final Canvas canvas = new Canvas();
-    private final Game game;
+    private Game game;
     private final Login login;
     private final Pause pause;
     private final GameLoop gameLoop;
@@ -167,7 +169,7 @@ public class GameView extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //System.out.println(e.getX() + "," + e.getY());
+                System.out.println(e.getX() + "," + e.getY());
                 switch (gameLoop.running) {
                     case 0:
                         if(e.getX() >= 565 && e.getX() <= 756 && e.getY() >= 330 && e.getY() <= 361) {      // account
@@ -190,7 +192,13 @@ public class GameView extends JFrame {
                         if(e.getX() >= 605 && e.getX() <= 661 && e.getY() >= 262 && e.getY() <= 314) {  // resume
                             gameLoop.stop(2, 1);
                         }
-                        if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 390 && e.getY() <= 456) {  // login
+                        if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 341 && e.getY() <= 409) {  // restart
+                            AudioPlayer.stopSounds(game.getWorld().clip);
+                            gameLoop.restart();
+                            game = gameLoop.game;
+                            gameLoop.stop(2, 1);
+                        }
+                        if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 419 && e.getY() <= 486) {  // login
                             gameLoop.stop(2, 0);
                         }
                         break;

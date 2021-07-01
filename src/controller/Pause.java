@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Pause {
-    private final World world;
+    private World world;
     GameLoop.View view;
     public GameLoop gameLoop;
     private Image pauseWindow;
@@ -31,6 +31,10 @@ public class Pause {
 
     public World getWorld() {
         return world;
+    }
+
+    public void restart(World world) {
+        this.world = world;
     }
 
     public void render(Graphics g) {
