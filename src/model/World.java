@@ -129,7 +129,7 @@ public class World {
                 to.collisionHandler(originalLocation, from);
             } else if (from instanceof Knight) {
 	        if (originalBody.x + body.width >= range.x && originalBody.x <= range.x + range.width && (body.x + body.width < range.x || body.x > range.x + range.width))
-		    if (originalBody.y < range.y && range.y - originalBody.y - body.height < 20)
+		    if (originalBody.y + body.height < range.y + range.height && range.y - originalBody.y - body.height < 20)
 			((Knight)from).fallCount = 0;  //start falling
 	    }
         }
@@ -140,7 +140,7 @@ public class World {
                 to.collisionHandler(originalLocation, from);
             } else if (from instanceof Knight) {
 	        if (originalBody.x + body.width >= range.x && originalBody.x <= range.x + range.width && (body.x + body.width < range.x || body.x > range.x + range.width))
-		    if (originalBody.y < range.y && range.y - originalBody.y - body.height < 20)
+		    if (originalBody.y + body.height < range.y + range.height && range.y - originalBody.y - body.height < 20)
 			((Knight)from).fallCount = 0;  //start falling
             }
         }
