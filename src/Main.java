@@ -35,11 +35,8 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
         addAudioByFilePath(World.BGM, new File("assets/audio/background_BGM.wav"));
         addAudioByFilePath(IronBoar.WAIL, new File("assets/audio/wail.wav"));
-		addAudioByFilePath(StarPixie.DIE, new File("assets/audio/star_die.wav"));
-		addAudioByFilePath(IronBoar.DIE, new File("assets/audio/iron_die.wav"));
         addAudioByFilePath(Knight.JUMP, new File("assets/audio/jump.wav"));
         addAudioByFilePath(LoginWorld.BGM, new File("assets/audio/LoginTheme.wav"));
-
 
         // initialization
 
@@ -55,11 +52,11 @@ public class Main {
 	    o1.add(new Obstacle1("assets/obstacle/Obstacle4.jpg", new Point(0, 1350), d));
 
 	    obstacleCount = 2;
-	    d = Direction.LEFT;
+	    d = Direction.RIGHT;
     	    ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
 	    for (int i = 0; i < obstacleCount; i++) {
 		if (i == 0)
-	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445)%2048, (250)%1536), d));
+	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((375)%2048, (500)%1536), d));
 		else
 	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445+750)%2048, (250+300)%1536), d));
 
@@ -68,16 +65,18 @@ public class Main {
 	            d = Direction.RIGHT;
 	    }
 
-	    obstacleCount = 3;
+	    obstacleCount = 4;
 	    d = Direction.LEFT;
 	    ArrayList<Obstacle3> o3 = new ArrayList<Obstacle3>();
 	    for (int i = 0; i < obstacleCount; i++) {
 		if (i == 0)
-	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680)%2048, (950)%1536), d));
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680)%2048, (800)%1536), d));
 		else if (i == 1)
 	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680+800)%2048, (950+1000)%1536), d));
-		else
-	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((250)%2048, (700)%1536), d));
+		else if (i == 2)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((250)%2048, (1036)%1536), d));
+		else if (i == 3)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((500)%2048, (300)%1536), d));
 
 	        if (d == Direction.RIGHT)
 	            d = Direction.LEFT;
