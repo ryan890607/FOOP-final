@@ -118,7 +118,7 @@ public class World {
                 break;
             }
         }
-        if (!monsterExist) addSprite(new Boss(500, new Point(1700, 1350)));
+        if (!monsterExist) addSprite(new Boss(500, new Point(1700, 800)));
         //sprite.setWorld(null);
     }
 

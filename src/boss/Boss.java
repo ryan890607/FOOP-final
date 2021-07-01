@@ -43,8 +43,8 @@ public class Boss extends HealthPointSprite implements Dangerous {
         this.damage = damage;
         this.location = location;
         walkingDirection = LEFT;
-        shape = new SpriteShape(new Dimension(150, 180),
-                new Dimension(30, 30), new Dimension(90, 120));
+        shape = new SpriteShape(new Dimension(450, 450),
+                new Dimension(50, 50), new Dimension(350, 350));
         fsm = new FiniteStateMachine();
         //fsm_jump = new FiniteStateMachine();
 
@@ -62,11 +62,11 @@ public class Boss extends HealthPointSprite implements Dangerous {
         State approaching = new WaitingPerFrame(2,
                 new Approaching(this, imageStatesFromFolder("assets/monster/Boss/walking", imageRenderer)));
         State skill1 = new WaitingPerFrame(2,
-                new Skill1(this, imageStatesFromFolder("assets/monster/Boss/skill1", imageRenderer)));
+                new Skill1(this, imageStatesFromFolder("assets/monster/Boss/skill1/action", imageRenderer)));
         State skill2 = new WaitingPerFrame(2,
-                new Skill2(this, imageStatesFromFolder("assets/monster/Boss/skill2", imageRenderer)));
+                new Skill2(this, imageStatesFromFolder("assets/monster/Boss/skill2/action", imageRenderer)));
         State skill3 = new WaitingPerFrame(2,
-                new Skill3(this, imageStatesFromFolder("assets/monster/Boss/skill3", imageRenderer)));
+                new Skill3(this, imageStatesFromFolder("assets/monster/Boss/skill3/action", imageRenderer)));
         /*State wait = new WaitingPerFrame(2,
                 new Wait(this));
         State jump = new WaitingPerFrame(2,
@@ -86,6 +86,9 @@ public class Boss extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(attacking).when(SKILL1).to(skill1));
         fsm.addTransition(from(attacking).when(SKILL2).to(skill2));
         fsm.addTransition(from(attacking).when(SKILL3).to(skill3));
+        fsm.addTransition(from(skill1).when(ATTACK).to(attacking));
+        fsm.addTransition(from(skill2).when(ATTACK).to(attacking));
+        fsm.addTransition(from(skill3).when(ATTACK).to(attacking));
         /*fsm_jump.setInitialState(wait);
         fsm_jump.addTransition(from(wait).when(JUMP).to(jump));*/
     }

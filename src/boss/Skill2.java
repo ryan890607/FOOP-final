@@ -50,5 +50,7 @@ public class Skill2 extends Sequence {
         currentPosition = 0;
         if (randomGenerator.nextInt(100) % 4 == 0)
             boss.approach();
+        else
+            boss.attack();
     }
 }
