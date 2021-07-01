@@ -5,10 +5,7 @@ import knight.Attacking;
 import knight.Knight;
 import knight.KnightCollisionHandler;
 import knight.Walking;
-import model.Direction;
-import model.HealthPointSprite;
-import model.LoginWorld;
-import model.World;
+import model.*;
 import starPixie.StarPixie;
 import views.GameView;
 import ironBoar.IronBoar;
@@ -40,12 +37,16 @@ public class Main {
 
         // initialization
 
-        Knight p1 = new Knight(150, new Point(0, 400+768));
-        Knight p2 = new Knight(150, new Point(300, 300+768));
+        Knight p1 = new Knight(300, new Point(0, 400+768));
+        Knight p2 = new Knight(300, new Point(300, 300+768));
         IronBoar m1 = new IronBoar(100, new Point(300, 150));
         IronBoar m2 = new IronBoar(100, new Point(500, 150));
         StarPixie m3 = new StarPixie(50, new Point(300, 350));
-        
+		MonsterGenerator generator = new MonsterGenerator();
+
+
+
+
         int obstacleCount = 1;
 	    Direction d = Direction.RIGHT;
 	    ArrayList<Obstacle1> o1 = new ArrayList<Obstacle1>();
@@ -83,7 +84,9 @@ public class Main {
 	    }
 	
         World world = new World("assets/background/fallguys4times.jpg", o1, o2, o3, new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
-        LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.png");
+		world.addSprites(generator.generateIronBoar(new Point(0, 1350-170), new Point(2048, 1350-170), 3));
+		world.addSprites(generator.generateStarPixie(new Point(0, 1350-170), new Point(2048, 1350-170), 3));
+		LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.png");
 
         Game game = new Game(world, p1, p2);  // controller
 

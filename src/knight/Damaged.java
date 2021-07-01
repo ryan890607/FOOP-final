@@ -10,8 +10,8 @@ import java.util.List;
 public class Damaged extends CyclicSequence {
     private Knight knight;
     private StateMachine stateMachine;
-    private final int a = 8;
-    private final int v = 40;
+    private final int a = 4;
+    private final int v = 20;
     private int currentV = v;
     public Damaged(Knight knight, StateMachine stateMachine, List<? extends State> states){
         super(states);

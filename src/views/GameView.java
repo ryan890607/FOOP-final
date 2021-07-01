@@ -97,7 +97,7 @@ public class GameView extends JFrame {
                                 game.jump(P1);
                                 break;
                             case KeyEvent.VK_I:
-                                game.moveKnight(P2, Direction.UP);
+                                game.skillI(P1);
                                 break;
                             case KeyEvent.VK_K:
                                 game.moveKnight(P2, Direction.DOWN);
@@ -109,7 +109,7 @@ public class GameView extends JFrame {
                                 game.moveKnight(P2, Direction.RIGHT);
                                 break;
                             case KeyEvent.VK_U:
-                                game.attack(P2);
+                                game.skillU(P1);
                                 break;
                         }
                         break;

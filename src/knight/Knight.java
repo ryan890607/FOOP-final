@@ -37,26 +37,30 @@ public class Knight extends HealthPointSprite {
     public static final String JUMP = "jump";
     private Direction responseDirection;
     public enum Event {
-        WALK, STOP, ATTACK, DAMAGED
+        WALK, STOP, ATTACK, DAMAGED, SKILLU, SKILLI
     }
 
     public Knight(int damage, Point location) {
         super(KNIGHT_HP);
         this.damage = damage;
         this.location = location;
-        shape = new SpriteShape(new Dimension(146, 176),
-                new Dimension(33, 38), new Dimension(66, 105));
+        shape = new SpriteShape(new Dimension(210, 165),
+                new Dimension(40, 6), new Dimension(66, 105));
         fsm = new FiniteStateMachine();
 
         ImageRenderer imageRenderer = new KnightImageRenderer(this);
         State idle = new WaitingPerFrame(8,
                 new Idle(imageStatesFromFolder("assets/idle", imageRenderer)));
-        State walking = new WaitingPerFrame(1,
+        State walking = new WaitingPerFrame(4,
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
-        State attacking = new WaitingPerFrame(5,
+        State attacking = new WaitingPerFrame(2,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
         State damaged = new WaitingPerFrame(2,
                 new Damaged(this, fsm, imageStatesFromFolder("assets/damaged", imageRenderer)));
+        State skill_u_state = new  WaitingPerFrame(2,
+                new Skill_U(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
+        State skill_i_state = new  WaitingPerFrame(2,
+                new Skill_I(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
         fsm.setInitialState(idle);
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
@@ -65,7 +69,10 @@ public class Knight extends HealthPointSprite {
         fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
         fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
-
+        fsm.addTransition(from(idle).when(SKILLU).to(skill_u_state));
+        fsm.addTransition(from(walking).when(SKILLU).to(skill_u_state));
+        fsm.addTransition(from(idle).when(SKILLI).to(skill_i_state));
+        fsm.addTransition(from(walking).when(SKILLI).to(skill_i_state));
         jumpStep = -1;
 	fallCount = -1;
         int size = jumpSequence.size();
@@ -80,6 +87,8 @@ public class Knight extends HealthPointSprite {
         return damage;
     }
 
+    public void skillU() { fsm.trigger(SKILLU); }
+    public void skillI() { fsm.trigger(SKILLI); }
     public void move(Direction direction) {
         if (direction == LEFT || direction == Direction.RIGHT) {
             face = direction;

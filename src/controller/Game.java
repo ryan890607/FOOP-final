@@ -39,6 +39,12 @@ public class Game {
         getPlayer(playerNumber).attack();
     }
 
+    public void skillU(int playerNumber) {
+        getPlayer(playerNumber).skillU();
+    }
+    public void skillI(int playerNumber) {
+        getPlayer(playerNumber).skillI();
+    }
     public void jump(int playerNumber) {
         if(getPlayer(playerNumber).jumpStep < 0 && getPlayer(playerNumber).fallCount < 0) getPlayer(playerNumber).jump(0);
     }

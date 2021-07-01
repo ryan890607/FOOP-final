@@ -4,6 +4,7 @@ import fsm.CyclicSequence;
 import fsm.ImageState;
 import model.Direction;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public class Walking extends CyclicSequence {
         if (knight.isAlive()) {
             super.update();
             for (Direction direction : knight.getDirections()) {
-                knight.getWorld().move(knight, direction.translate());
+                knight.getWorld().move(knight, new Dimension(direction.translate().width *2, direction.translate().height *2));
             }
         }
     }

@@ -20,7 +20,7 @@ public class KnightImageRenderer implements ImageRenderer {
         Direction face = knight.getFace();
         Rectangle range = knight.getRange();
         Rectangle body = knight.getBody();
-        if (face == Direction.LEFT) {
+        if (face == Direction.RIGHT) {
             g.drawImage(image, range.x + range.width, range.y, -range.width, range.height, null);
         } else {
             g.drawImage(image, range.x, range.y, range.width, range.height, null);
