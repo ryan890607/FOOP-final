@@ -27,6 +27,7 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  */
 public class Knight extends HealthPointSprite {
     public static final int KNIGHT_HP = 2000;
+    public static final int KNIGHT_MP = 1000;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -42,7 +43,7 @@ public class Knight extends HealthPointSprite {
     }
 
     public Knight(int damage, Point location) {
-        super(KNIGHT_HP);
+        super(KNIGHT_HP, KNIGHT_MP, true);
         this.damage = damage;
         this.location = location;
         shape = new SpriteShape(new Dimension(210, 165),
@@ -92,8 +93,16 @@ public class Knight extends HealthPointSprite {
         return damage;
     }
 
-    public void skillU() { fsm.trigger(SKILLU); }
-    public void skillI() { fsm.trigger(SKILLI); }
+    public void skillU() {
+        if (reducedMp(30))
+            fsm.trigger(SKILLU);
+        else fsm.trigger(STOP);
+    }
+    public void skillI() {
+        if (reducedMp(80))
+            fsm.trigger(SKILLI);
+        else fsm.trigger(STOP);
+    }
     public void move(Direction direction) {
         if (direction == LEFT || direction == Direction.RIGHT) {
             face = direction;

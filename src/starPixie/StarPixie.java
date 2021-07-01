@@ -39,7 +39,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
     }
 
     public StarPixie(int damage, Point location) {
-        super(HP);
+        super(HP, 0, false);
         this.damage = damage;
         this.location = location;
         walkingDirection = LEFT;

@@ -39,7 +39,7 @@ public class Boss extends HealthPointSprite implements Dangerous {
     }
 
     public Boss(int damage, Point location) {
-        super(HP);
+        super(HP, 0, false);
         this.damage = damage;
         this.location = location;
         walkingDirection = LEFT;

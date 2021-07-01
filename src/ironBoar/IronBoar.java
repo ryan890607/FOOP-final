@@ -39,7 +39,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
     }
 
     public IronBoar(int damage, Point location) {
-        super(HP);
+        super(HP, 0, false);
         this.damage = damage;
         this.location = location;
         walkingDirection = LEFT;

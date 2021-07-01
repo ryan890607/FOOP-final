@@ -1,5 +1,6 @@
 package model;
 
+import boss.Boss;
 import knight.Knight;
 import media.AudioPlayer;
 
@@ -109,7 +110,15 @@ public class World {
     }
 
     public void removeSprite(Sprite sprite) {
+        boolean monsterExist = false;
         sprites.remove(sprite);
+        for (int i = 0; i < sprites.size(); i++){
+            if (sprites.get(i) instanceof Dangerous) {
+                monsterExist = true;
+                break;
+            }
+        }
+        if (!monsterExist) addSprite(new Boss(500, new Point(1700, 1350)));
         sprite.setWorld(null);
     }
 

@@ -9,12 +9,16 @@ import java.awt.*;
  */
 public class HealthPointBar extends Sprite {
     private final int maxHp;
+    private final int maxMp;
     public final double threshold = 0.1;
     private Sprite owner;
     private int hp;
-
-    public HealthPointBar(int hp) {
+    private int mp;
+    private boolean showMp;
+    public HealthPointBar(int hp, int mp, boolean showMp) {
         this.maxHp = this.hp = hp;
+        this.maxMp = this.mp = mp;
+        this.showMp = showMp;
     }
 
     public void setOwner(Sprite owner) {
@@ -33,10 +37,17 @@ public class HealthPointBar extends Sprite {
     public void render(Graphics g) {
         Rectangle range = getRange();
         int width = (int) (hp * owner.getRange().getWidth() / maxHp);
+        int widthMp = (int) (mp * owner.getRange().getWidth() / maxMp);
         g.setColor(Color.RED);
         g.fillRect(range.x, range.y, (int) owner.getRange().getWidth(), range.height);
         g.setColor(Color.GREEN);
         g.fillRect(range.x, range.y, width, range.height);
+        if (showMp){
+            g.setColor(Color.WHITE);
+            g.fillRect(range.x, range.y + range.height, (int) owner.getRange().getWidth(), range.height);
+            g.setColor(Color.BLUE);
+            g.fillRect(range.x, range.y + range.height, widthMp, range.height);
+        }
     }
 
     @Override
@@ -65,5 +76,15 @@ public class HealthPointBar extends Sprite {
 
     public boolean isHarmless(int damage){
         return (double)damage / maxHp <= threshold;
+    }
+
+    public boolean reduceMp(int costMp){
+        if (mp < costMp) return false;
+        this.mp = Math.max(mp - costMp, 0);
+        return true;
+    }
+
+    public void addHp(int increased){
+        this.hp = Math.min(this.hp + increased, maxHp);
     }
 }
