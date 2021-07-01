@@ -125,6 +125,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
 
     @Override
     public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
+        if (fsm.currentState().toString().equals("Die")) return;
         hpBar.onDamaged(attacker, damageArea, damage);
         setTarget(attacker);
         if (hpBar.isHarmless(damage))
