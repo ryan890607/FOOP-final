@@ -48,7 +48,7 @@ public class Knight extends HealthPointSprite {
         super(KNIGHT_HP, KNIGHT_MP, true);
         this.damage = damage;
         this.location = location;
-        shape = new SpriteShape(new Dimension(210, 165),
+        shape = new SpriteShape(new Dimension(140, 150),
                 new Dimension(40, 6), new Dimension(66, 105));
         fsm = new FiniteStateMachine();
 
