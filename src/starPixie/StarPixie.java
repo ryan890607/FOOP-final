@@ -13,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static fsm.FiniteStateMachine.Transition.from;
+import static ironBoar.IronBoar.Event.DIEQQ;
 import static model.Direction.LEFT;
 import static model.Direction.RIGHT;
 import static utils.ImageStateUtils.imageStatesFromFolder;
@@ -77,6 +78,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
         fsm.addTransition(from(attacking).when(APPROACH).to(approaching));
         fsm.addTransition(from(approaching).when(ATTACK).to(attacking));
+        fsm.addTransition(from(damaged).when(DIEQQ).to(die));
         fsm_jump.setInitialState(wait);
         fsm_jump.addTransition(from(wait).when(JUMP).to(jump));
     }
