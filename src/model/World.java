@@ -6,6 +6,8 @@ import media.AudioPlayer;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.Clip;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -15,6 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 
+import obstacles.Obstacle;
 import obstacles.Obstacle1;
 import obstacles.Obstacle2;
 import obstacles.Obstacle3;
@@ -242,10 +245,37 @@ public class World {
             Point p = sprite.getLocation();
             g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 6, 6);
         }
+        for(Obstacle obstacle : floors) {
+            Point p = obstacle.getLocation();
+            int w = obstacle.getImage().getWidth(null), h = obstacle.getImage().getHeight(null);
+            BufferedImage img = resizeImage((BufferedImage)obstacle.getImage(), w/16, h/16);
+            g.drawImage(img, (int)(p.getX()/16), (int)(p.getY()/16), null);
+        }
+        for(Obstacle obstacle : rocks) {
+            Point p = obstacle.getLocation();
+            int w = obstacle.getImage().getWidth(null), h = obstacle.getImage().getHeight(null);
+            BufferedImage img = resizeImage((BufferedImage)obstacle.getImage(), w/16, h/16);
+            g.drawImage(img, (int)(p.getX()/16), (int)(p.getY()/16), null);
+        }
+        for(Obstacle obstacle : stairs) {
+            Point p = obstacle.getLocation();
+            int w = obstacle.getImage().getWidth(null), h = obstacle.getImage().getHeight(null);
+            BufferedImage img = resizeImage((BufferedImage)obstacle.getImage(), w/16, h/16);
+            g.drawImage(img, (int)(p.getX()/16), (int)(p.getY()/16), null);
+        }
         g.setColor(Color.green);
         Point p = player.getLocation();
         g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
 
+
         g.drawImage(pause, 950, 0, null);
+    }
+
+    public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
+        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2D = resizedImage.createGraphics();
+        graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+        graphics2D.dispose();
+        return resizedImage;
     }
 }

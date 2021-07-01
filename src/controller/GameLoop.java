@@ -123,9 +123,12 @@ public class GameLoop {
                         world.update();
                         view.render(1, world);
                         delay(15);
+                        if(!game.getWorld().getPlayer().isAlive()) {
+                            running = 2;
+                        }
                     }
                     from = 1;
-                    //if(running == 0 && getWorld().clip != null) AudioPlayer.stopSounds(getWorld().clip);
+                    if(running == 0 && getWorld().clip != null) AudioPlayer.stopSounds(getWorld().clip);
                     break;
                 case 2: // pause
                     while (running == 2) {

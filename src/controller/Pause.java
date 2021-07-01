@@ -12,12 +12,17 @@ public class Pause {
     private World world;
     GameLoop.View view;
     public GameLoop gameLoop;
-    private Image pauseWindow;
+    private Image pauseWindow, gameover;
 
     public Pause(World world) {
         this.world = world;
         try {
             pauseWindow = ImageIO.read(new File("assets/background/pause.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            gameover = ImageIO.read(new File("assets/background/gameover.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -39,6 +44,9 @@ public class Pause {
 
     public void render(Graphics g) {
         world.render(g);
-        g.drawImage(pauseWindow, 0, 0, null);
+        if(world.getPlayer().isAlive())
+            g.drawImage(pauseWindow, 0, 0, null);
+        else
+            g.drawImage(gameover, 0, 0, null);
     }
 }
