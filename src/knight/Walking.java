@@ -24,7 +24,8 @@ public class Walking extends CyclicSequence {
         if (knight.isAlive()) {
             super.update();
             for (Direction direction : knight.getDirections()) {
-                knight.getWorld().move(knight, direction.translate());
+		//if (direction != Direction.UP)
+                    knight.getWorld().move(knight, direction.translate());
             }
         }
     }

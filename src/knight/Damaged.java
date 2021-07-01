@@ -28,6 +28,7 @@ public class Damaged extends CyclicSequence {
             if (currentV == -v) {
                 currentV = v;
                 stateMachine.reset();
+		this.knight.fallCount = 0;  //start falling
             } else currentV -= a;
         }
     }

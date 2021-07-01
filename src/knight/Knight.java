@@ -50,7 +50,7 @@ public class Knight extends HealthPointSprite {
 
         ImageRenderer imageRenderer = new KnightImageRenderer(this);
         State idle = new WaitingPerFrame(8,
-                new Idle(imageStatesFromFolder("assets/idle", imageRenderer)));
+                new Idle(this, imageStatesFromFolder("assets/idle", imageRenderer)));
         State walking = new WaitingPerFrame(1,
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
         State attacking = new WaitingPerFrame(5,
@@ -115,6 +115,8 @@ public class Knight extends HealthPointSprite {
         if(now == 0) AudioPlayer.playSounds(JUMP);
         world.jump(this, new Dimension(0, jumpSequence.get(now)));
         jumpStep = now == jumpSequence.size()-1? -1:now+1;
+	if (jumpStep == -1)
+		fallCount = 0;
     }
 
     public void fall(int count) {
@@ -122,6 +124,7 @@ public class Knight extends HealthPointSprite {
 		return;
 	world.jump(this, new Dimension(0, count));
     }
+
 
     @Override
     public void render(Graphics g) {
