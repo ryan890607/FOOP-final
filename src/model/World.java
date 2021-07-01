@@ -119,7 +119,7 @@ public class World {
             }
         }
         if (!monsterExist) addSprite(new Boss(500, new Point(1700, 1350)));
-        sprite.setWorld(null);
+        //sprite.setWorld(null);
     }
 
     public void move(Sprite from, Dimension offset) {
