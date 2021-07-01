@@ -52,14 +52,16 @@ public class Main {
 	    ArrayList<Obstacle1> o1 = new ArrayList<Obstacle1>();
 	    o1.add(new Obstacle1("assets/obstacle/Obstacle4.jpg", new Point(0, 1350), d));
 
-	    obstacleCount = 2;
+	    obstacleCount = 3;
 	    d = Direction.RIGHT;
     	    ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
 	    for (int i = 0; i < obstacleCount; i++) {
 		if (i == 0)
-	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((375)%2048, (500)%1536), d));
-		else
+	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((250)%2048, (500)%1536), d));
+		else if (i == 1)
 	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445+750)%2048, (250+300)%1536), d));
+		else if (i == 2)
+	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((800)%2048, (200)%1536), d));
 
 	        if (d == Direction.RIGHT)  d = Direction.LEFT;
 	        else
@@ -77,7 +79,7 @@ public class Main {
 		else if (i == 2)
 	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((250)%2048, (1036)%1536), d));
 		else if (i == 3)
-	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((500)%2048, (300)%1536), d));
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((400)%2048, (330)%1536), d));
 
 	        if (d == Direction.RIGHT)
 	            d = Direction.LEFT;
@@ -85,7 +87,7 @@ public class Main {
 	            d = Direction.RIGHT;
 	    }
 	
-        World world = new World("assets/background/fallguys4times.jpg", o1, o2, o3, new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
+          World world = new World("assets/background/fallguys4times.jpg", o1, o2, o3, new KnightCollisionHandler(), p1, p2, m1, m2, m3);  // model
         LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.png");
 
         Game game = new Game(world, p1, p2);  // controller
