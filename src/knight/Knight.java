@@ -26,8 +26,8 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Knight extends HealthPointSprite {
-    public static final int KNIGHT_HP = 10000;
-    public static final int KNIGHT_MP = 10000;
+    public int KNIGHT_HP = 1000;
+    public int KNIGHT_MP = 1000;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -37,6 +37,7 @@ public class Knight extends HealthPointSprite {
     public int fallCount;
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
     public static final String JUMP = "jump";
+    public int lv = 1, exp = 0;
 
 
     private Direction responseDirection;
@@ -45,7 +46,7 @@ public class Knight extends HealthPointSprite {
     }
 
     public Knight(int damage, Point location) {
-        super(KNIGHT_HP, KNIGHT_MP, true);
+        super(1000, 1000, true);
         this.damage = damage;
         this.location = location;
         shape = new SpriteShape(new Dimension(300, 300),
@@ -133,8 +134,8 @@ public class Knight extends HealthPointSprite {
             fall(fallCount++);
         if(getX() < 0) location.x = 0;
         if(getY() < 0) location.y = 0;
-        if(getX() > world.getBackground().getWidth(null)-getRange().width) location.x = world.getBackground().getWidth(null)-getRange().width;
-        if(getY() > world.getBackground().getHeight(null)-getRange().height) location.y = world.getBackground().getHeight(null)-getRange().height;
+        if(getX() > world.getBackground().getWidth(null)-getBodySize().width) location.x = world.getBackground().getWidth(null)-getBodySize().width;
+        if(getY() > world.getBackground().getHeight(null)-getBodySize().height) location.y = world.getBackground().getHeight(null)-getBodySize().height;
     }
 
     public void jump(int now) {
@@ -205,8 +206,24 @@ public class Knight extends HealthPointSprite {
         fsm.trigger(DAMAGED);
     }
 
+    @Override
+    public void getEXP(int exp) {
+        this.exp += exp;
+    }
+
     public boolean isBeingDamaged(){
         return fsm.currentState().toString().equals("Damaged");
     }
+
+    public void LVup() {
+        exp -= lv * 100;
+        lv++;
+        KNIGHT_HP = KNIGHT_MP = lv * 1000;
+        hpBar.setMax(KNIGHT_HP, KNIGHT_MP);
+        hpBar.setHp(KNIGHT_HP);
+        hpBar.setMp(KNIGHT_MP);
+    }
+
+
 
 }
