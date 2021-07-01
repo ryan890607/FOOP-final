@@ -25,9 +25,11 @@ public class Walking extends CyclicSequence {
             if(knight.jumpStep >= 0) super.currentPosition = 10;
             super.update();
             for (Direction direction : knight.getDirections()) {
-		//if (direction != Direction.UP)
+		if (direction != Direction.UP)
                     knight.getWorld().move(knight, direction.translate());
             }
+	    //if (this.knight.jumpStep < 0)
+		//this.knight.fallCount = 0;
         }
     }
 
