@@ -35,7 +35,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
 
 
     public enum Event {
-        WALK, STOP, DAMAGED, DIE, ATTACK, JUMP
+        WALK, STOP, DAMAGED, DIEQQ, ATTACK, JUMP
     }
 
     public IronBoar(int damage, Point location) {
@@ -67,11 +67,11 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
-        fsm.addTransition(from(idle).when(DIE).to(die));
+        fsm.addTransition(from(idle).when(DIEQQ).to(die));
         fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
-        fsm.addTransition(from(walking).when(DIE).to(die));
+        fsm.addTransition(from(walking).when(DIEQQ).to(die));
         fsm.addTransition(from(damaged).when(ATTACK).to(attacking));
-        fsm.addTransition(from(attacking).when(DIE).to(die));
+        fsm.addTransition(from(attacking).when(DIEQQ).to(die));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
 
         fsm_jump.setInitialState(wait);
@@ -119,7 +119,9 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
 
     @Override
     public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
-        if (fsm.currentState().toString().equals("Die")) return;
+        if (fsm.currentState().toString().equals("Die")) {
+            return;
+        }
         hpBar.onDamaged(attacker, damageArea, damage);
         AudioPlayer.playSounds(WAIL);
         setTarget(attacker);
@@ -129,7 +131,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
 
         if (hpBar.isDead()) {
             AudioPlayer.playSounds(DIE);
-            fsm.trigger(DIE);
+            fsm.trigger(DIEQQ);
         } else {
             fsm.trigger(DAMAGED);
         }

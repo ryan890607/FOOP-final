@@ -35,7 +35,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
 
 
     public enum Event {
-        WALK, STOP, DAMAGED, DIE, ATTACK, JUMP, APPROACH
+        WALK, STOP, DAMAGED, DIEQQ, ATTACK, JUMP, APPROACH
     }
 
     public StarPixie(int damage, Point location) {
@@ -69,11 +69,11 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
-        fsm.addTransition(from(idle).when(DIE).to(die));
+        fsm.addTransition(from(idle).when(DIEQQ).to(die));
         fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
-        fsm.addTransition(from(walking).when(DIE).to(die));
+        fsm.addTransition(from(walking).when(DIEQQ).to(die));
         fsm.addTransition(from(damaged).when(ATTACK).to(attacking));
-        fsm.addTransition(from(attacking).when(DIE).to(die));
+        fsm.addTransition(from(attacking).when(DIEQQ).to(die));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
         fsm.addTransition(from(attacking).when(APPROACH).to(approaching));
         fsm.addTransition(from(approaching).when(ATTACK).to(attacking));
@@ -134,7 +134,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
 
         if (hpBar.isDead()) {
             AudioPlayer.playSounds(DIE);
-            fsm.trigger(DIE);
+            fsm.trigger(DIEQQ);
         } else {
             fsm.trigger(DAMAGED);
         }

@@ -35,7 +35,7 @@ public class Boss extends HealthPointSprite implements Dangerous {
 
 
     public enum Event {
-        WALK, STOP, DAMAGED, DIE, ATTACK, JUMP, APPROACH, SKILL1, SKILL2, SKILL3
+        WALK, STOP, DAMAGED, DIEQQ, ATTACK, JUMP, APPROACH, SKILL1, SKILL2, SKILL3
     }
 
     public Boss(int damage, Point location) {
@@ -75,11 +75,11 @@ public class Boss extends HealthPointSprite implements Dangerous {
         fsm.addTransition(from(idle).when(WALK).to(walking));
         fsm.addTransition(from(walking).when(STOP).to(idle));
         fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
-        fsm.addTransition(from(idle).when(DIE).to(die));
+        fsm.addTransition(from(idle).when(DIEQQ).to(die));
         fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
-        fsm.addTransition(from(walking).when(DIE).to(die));
+        fsm.addTransition(from(walking).when(DIEQQ).to(die));
         fsm.addTransition(from(damaged).when(ATTACK).to(attacking));
-        fsm.addTransition(from(attacking).when(DIE).to(die));
+        fsm.addTransition(from(attacking).when(DIEQQ).to(die));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
         fsm.addTransition(from(attacking).when(APPROACH).to(approaching));
         fsm.addTransition(from(approaching).when(ATTACK).to(attacking));
@@ -144,6 +144,7 @@ public class Boss extends HealthPointSprite implements Dangerous {
 
     @Override
     public void onDamaged(Sprite attacker, Rectangle damageArea, int damage) {
+        if (fsm.currentState().toString().equals("Die")) return;
         hpBar.onDamaged(attacker, damageArea, damage);
         setTarget(attacker);
         if (hpBar.isHarmless(damage))
@@ -152,7 +153,7 @@ public class Boss extends HealthPointSprite implements Dangerous {
 
         if (hpBar.isDead()) {
             AudioPlayer.playSounds(DIE);
-            fsm.trigger(DIE);
+            fsm.trigger(DIEQQ);
         } else {
             fsm.trigger(DAMAGED);
         }
