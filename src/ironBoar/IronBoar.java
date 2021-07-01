@@ -104,6 +104,11 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
     public void update() {
         fsm.update();
         fsm_jump.update();
+
+	if(getX() < 0) location.x = 0;
+        if(getY() < 0) location.y = 0;
+        if(getX() > world.getBackground().getWidth(null)-getRange().width) location.x = world.getBackground().getWidth(null)-getRange().width;
+        if(getY() > world.getBackground().getHeight(null)-getRange().height) location.y = world.getBackground().getHeight(null)-getRange().height;
     }
 
     @Override
