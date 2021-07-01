@@ -31,7 +31,7 @@ public class Knight extends HealthPointSprite {
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
-    private final int damage;
+    private int damage;
     public int jumpLV;
     public int jumpStep;
     public int fallCount;
@@ -129,6 +129,7 @@ public class Knight extends HealthPointSprite {
         fsm.update();
 
         if(this.world == null) return;
+        hpBar.addMp(lv);
         jump(jumpStep);
         if (fallCount >= 0)
             fall(fallCount++);
