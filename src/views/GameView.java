@@ -17,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -28,17 +29,17 @@ public class GameView extends JFrame {
     public static final int P1 = 1;
     public static final int P2 = 2;
     private final Canvas canvas = new Canvas();
-    private Game game;
+    private ArrayList<Game> games;
     private final Login login;
     private final Pause pause;
     private final GameLoop gameLoop;
 
-    public GameView(Login login, Game game, Pause pause) throws HeadlessException {
+    public GameView(Login login, Pause pause) throws HeadlessException {
         this.login = login;
-        this.game = game;
+        this.games = pause.games;
         this.pause = pause;
         login.setView(canvas);
-        game.setView(canvas);
+        for(Game g : games) g.setView(canvas);
         pause.setView(canvas);
         gameLoop = login.gameLoop;
     }
@@ -82,49 +83,52 @@ public class GameView extends JFrame {
                                 break;
                         }
                         break;
-                    case 1:
+                    case 1: case 2:
                         switch (keyEvent.getKeyCode()) {
-                            case KeyEvent.VK_W:
-                                game.moveKnight(P1, Direction.UP);
-                                break;
-                            case KeyEvent.VK_S:
-                                game.moveKnight(P1, Direction.DOWN);
-                                break;
+//                            case KeyEvent.VK_W:
+//                                game.moveKnight(P1, Direction.UP);
+//                                break;
+//                            case KeyEvent.VK_S:
+//                                game.moveKnight(P1, Direction.DOWN);
+//                                break;
                             case KeyEvent.VK_A:
-                                game.moveKnight(P1, Direction.LEFT);
+                                games.get(gameLoop.running-1).moveKnight(P1, Direction.LEFT);
                                 break;
                             case KeyEvent.VK_D:
-                                game.moveKnight(P1, Direction.RIGHT);
+                                games.get(gameLoop.running-1).moveKnight(P1, Direction.RIGHT);
                                 break;
                             case KeyEvent.VK_E:
-                                game.attack(P1);
+                                games.get(gameLoop.running-1).attack(P1);
                                 break;
                             case KeyEvent.VK_SPACE:
-                                game.jump(P1);
+                                games.get(gameLoop.running-1).jump(P1);
                                 break;
                             case KeyEvent.VK_I:
-                                game.skillI(P1);
-                                break;
-                            case KeyEvent.VK_K:
-                                game.moveKnight(P2, Direction.DOWN);
-                                break;
-                            case KeyEvent.VK_J:
-                                game.moveKnight(P2, Direction.LEFT);
-                                break;
-                            case KeyEvent.VK_L:
-                                game.moveKnight(P2, Direction.RIGHT);
+                                games.get(gameLoop.running-1).skillI(P1);
                                 break;
                             case KeyEvent.VK_U:
-                                game.skillU(P1);
+                                games.get(gameLoop.running-1).skillU(P1);
                                 break;
+//                            case KeyEvent.VK_K:
+//                                game.moveKnight(P2, Direction.DOWN);
+//                                break;
+//                            case KeyEvent.VK_J:
+//                                game.moveKnight(P2, Direction.LEFT);
+//                                break;
+//                            case KeyEvent.VK_L:
+//                                game.moveKnight(P2, Direction.RIGHT);
+//                                break;
+//                            case KeyEvent.VK_U:
+//                                game.skillU(P1);
+//                                break;
                             case KeyEvent.VK_ESCAPE:
-                                gameLoop.stop(1, 2);
+                                gameLoop.stop(gameLoop.running, 100);
                         }
                         break;
-                    case 2:
+                    case 100:
                         switch (keyEvent.getKeyCode()) {
                             case KeyEvent.VK_ESCAPE:
-                                gameLoop.stop(2, 1);
+                                gameLoop.stop(100, pause.nowGame);
                         }
                 }
 
@@ -133,32 +137,32 @@ public class GameView extends JFrame {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 switch (gameLoop.running) {
-                    case 1:
+                    case 1: case 2:
                         switch (keyEvent.getKeyCode()) {
-                            case KeyEvent.VK_W:
-                                game.stopKnight(P1, Direction.UP);
-                                break;
-                            case KeyEvent.VK_S:
-                                game.stopKnight(P1, Direction.DOWN);
-                                break;
+//                            case KeyEvent.VK_W:
+//                                game.stopKnight(P1, Direction.UP);
+//                                break;
+//                            case KeyEvent.VK_S:
+//                                game.stopKnight(P1, Direction.DOWN);
+//                                break;
                             case KeyEvent.VK_A:
-                                game.stopKnight(P1, Direction.LEFT);
+                                games.get(gameLoop.running-1).stopKnight(P1, Direction.LEFT);
                                 break;
                             case KeyEvent.VK_D:
-                                game.stopKnight(P1, Direction.RIGHT);
+                                games.get(gameLoop.running-1).stopKnight(P1, Direction.RIGHT);
                                 break;
-                            case KeyEvent.VK_I:
-                                game.stopKnight(P2, Direction.UP);
-                                break;
-                            case KeyEvent.VK_K:
-                                game.stopKnight(P2, Direction.DOWN);
-                                break;
-                            case KeyEvent.VK_J:
-                                game.stopKnight(P2, Direction.LEFT);
-                                break;
-                            case KeyEvent.VK_L:
-                                game.stopKnight(P2, Direction.RIGHT);
-                                break;
+//                            case KeyEvent.VK_I:
+//                                game.stopKnight(P2, Direction.UP);
+//                                break;
+//                            case KeyEvent.VK_K:
+//                                game.stopKnight(P2, Direction.DOWN);
+//                                break;
+//                            case KeyEvent.VK_J:
+//                                game.stopKnight(P2, Direction.LEFT);
+//                                break;
+//                            case KeyEvent.VK_L:
+//                                game.stopKnight(P2, Direction.RIGHT);
+//                                break;
                         }
                         break;
                 }
@@ -183,41 +187,42 @@ public class GameView extends JFrame {
                         }
                         else login.getWorld().state = 0;
                         break;
-                    case 1:
+                    case 1: case 2:
                         if(e.getX() >= 965 && e.getX() <= 1007 && e.getY() >= 39 && e.getY() <= 78) {   // pause
-                            gameLoop.stop(1, 2);
+                            gameLoop.stop(gameLoop.running, 100);
                         }
                         break;
-                    case 2:
-                        if(game.getPlayer(P1).isAlive()) {
+                    case 100:
+                        if(pause.games.get(pause.nowGame-1).getPlayer(P1).isAlive()) {
+                            System.out.print(pause.nowGame-1);
                             if(e.getX() >= 605 && e.getX() <= 661 && e.getY() >= 262 && e.getY() <= 314) {  // resume
-                                    gameLoop.stop(2, 1);
+                                gameLoop.stop(100, pause.nowGame);
                             }
                             if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 341 && e.getY() <= 409) {  // restart
-                                AudioPlayer.stopSounds(game.getWorld().clip);
-                                gameLoop.restart();
-                                game = gameLoop.game;
-                                game.setView(canvas);
-                                gameLoop.stop(2, 1);
+                                AudioPlayer.stopSounds(pause.games.get(pause.nowGame-1).getWorld().clip);
+                                gameLoop.restart(pause.nowGame-1);
+                                games = gameLoop.games;
+                                games.get(pause.nowGame-1).setView(canvas);
+                                gameLoop.stop(100, pause.nowGame);
                             }
                             if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 419 && e.getY() <= 486) {  // login
-                                gameLoop.stop(2, 0);
+                                gameLoop.stop(100, 0);
                             }
                         }
                         else {
                             if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 341 && e.getY() <= 409) {  // restart
-                                AudioPlayer.stopSounds(game.getWorld().clip);
-                                gameLoop.restart();
-                                game = gameLoop.game;
-                                game.setView(canvas);
-                                gameLoop.stop(2, 1);
+                                AudioPlayer.stopSounds(pause.games.get(pause.nowGame-1).getWorld().clip);
+                                gameLoop.restart(pause.nowGame-1);
+                                games = gameLoop.games;
+                                games.get(pause.nowGame-1).setView(canvas);
+                                gameLoop.stop(100, pause.nowGame);
                             }
                             if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 419 && e.getY() <= 486) {  // login
-                                AudioPlayer.stopSounds(game.getWorld().clip);
-                                gameLoop.restart();
-                                game = gameLoop.game;
-                                game.setView(canvas);
-                                gameLoop.stop(2, 0);
+                                AudioPlayer.stopSounds(pause.games.get(pause.nowGame-1).getWorld().clip);
+                                gameLoop.restart(pause.nowGame-1);
+                                games = gameLoop.games;
+                                games.get(pause.nowGame-1).setView(canvas);
+                                gameLoop.stop(100, 0);
                             }
                         }
                         break;
@@ -265,10 +270,10 @@ public class GameView extends JFrame {
                 case 0:
                     if(loginWorld != null) loginWorld.render(g);
                     break;
-                case 1:
+                case 1: case 2:
                     if(world != null) world.render(g);
                     break;
-                case 2:
+                case 100:
                     if(world != null) pause.render(g);
                     break;
             }
