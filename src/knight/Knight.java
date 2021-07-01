@@ -139,6 +139,8 @@ public class Knight extends HealthPointSprite {
     public void fall(int count) {
         if (count < 0)
 		return;
+	if (count == 0)
+	    count++;
 	world.jump(this, new Dimension(0, count));
     }
 
