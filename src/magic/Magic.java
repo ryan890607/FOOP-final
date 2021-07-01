@@ -15,7 +15,8 @@ import java.awt.*;
 import static utils.ImageStateUtils.imageStatesFromFolder;
 
 public class Magic extends Sprite implements Dangerous {
-    private Point end;
+    public Point end;
+    public Point start;
     private State currentState;
     private State attacking;
     private State ending;
@@ -25,11 +26,12 @@ public class Magic extends Sprite implements Dangerous {
 
     public Magic(Point start, Point end, String folderName, int damage, boolean endOnly){
         this.damage = damage;
-        setLocation(start);
+        setLocation(endOnly ? end : start);
         this.end = end;
+        this.start = start;
         setFace(start.x > end.x ? Direction.LEFT : Direction.RIGHT);
-        shape = new SpriteShape(new Dimension(100, 100),
-                new Dimension(50, 50), new Dimension(50, 50));
+        shape = new SpriteShape(new Dimension(150, 150),
+                new Dimension(50, 50), new Dimension(100, 100));
         imageRenderer = new MagicImageRenderer(this);
         attacking = new WaitingPerFrame(2,
                 new Attacking(this, imageStatesFromFolder(folderName + "/magic", imageRenderer)));

@@ -25,7 +25,7 @@ public class Attacking extends Sequence {
         if (starPixie.isAlive()) {
             if (currentPosition == 0){
                 start = new Point(starPixie.getLocation());
-                end = new Point(starPixie.getTarget().getLocation());
+                end = new Point(starPixie.getTarget().getBody().getLocation());
                 if (starPixie.getX() < starPixie.getTarget().getX()){
                     starPixie.setFace(Direction.RIGHT);
                 } else {

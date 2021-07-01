@@ -25,7 +25,7 @@ public class Skill1 extends Sequence {
         if (boss.isAlive()) {
             if (currentPosition == 0){
                 start = new Point(boss.getLocation());
-                end = new Point(boss.getTarget().getLocation());
+                end = new Point(boss.getTarget().getBody().getLocation());
                 if (boss.getX() < boss.getTarget().getX()){
                     boss.setFace(Direction.RIGHT);
                 } else {

@@ -19,16 +19,20 @@ public class Attacking extends CyclicSequence {
     @Override
     public void update() {
         super.update();
+        int d_x, d_y = magic.start.y - magic.getEndY();
         if (magic.getFace() == Direction.LEFT){
-            if (magic.getEndX() > magic.getX())
+            d_x = magic.start.x - magic.getEndX();
+            if (magic.getEndX() > magic.getX()){
                 magic.goEnding();
-            else magic.getWorld().move(magic, Direction.LEFT.translate());
+            }
+            else magic.getWorld().move(magic, new Dimension(-6, -6 * (d_y/d_x)));
         } else {
-            if (magic.getEndX() < magic.getX())
+            d_x = magic.getEndX() - magic.start.x;
+            if (magic.getEndX() < magic.getX()){
                 magic.goEnding();
-            else magic.getWorld().move(magic, Direction.RIGHT.translate());
+            }
+            else magic.getWorld().move(magic, new Dimension(6, -6 * (d_y/d_x)));
         }
-
     }
 
 }

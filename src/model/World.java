@@ -123,8 +123,8 @@ public class World {
                 break;
             }
         }
-        if (!monsterExist && bossAppear) {
-            bossAppear = false;
+        if (!monsterExist && !bossAppear) {
+            bossAppear = true;
             addSprite(boss);
         }
         //sprite.setWorld(null);
