@@ -13,7 +13,7 @@ public class Login {
     }
 
     public void loginSuccess() {
-        if(loginWorld.account.equals("kuo2020") && loginWorld.password.equals("e04e04e04")) gameLoop.stop();
+        if(loginWorld.account.equals("kuo2020") && loginWorld.password.equals("e04e04e04")) gameLoop.stop(0, 1);
         else loginWorld.state = 4;
     }
 

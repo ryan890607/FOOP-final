@@ -3,6 +3,7 @@ package views;
 import controller.Game;
 import controller.GameLoop;
 import controller.Login;
+import controller.Pause;
 import model.Direction;
 import model.LoginWorld;
 import model.Sprite;
@@ -27,13 +28,16 @@ public class GameView extends JFrame {
     private final Canvas canvas = new Canvas();
     private final Game game;
     private final Login login;
+    private final Pause pause;
     private final GameLoop gameLoop;
 
-    public GameView(Login login, Game game) throws HeadlessException {
+    public GameView(Login login, Game game, Pause pause) throws HeadlessException {
         this.login = login;
         this.game = game;
+        this.pause = pause;
         login.setView(canvas);
         game.setView(canvas);
+        pause.setView(canvas);
         gameLoop = login.gameLoop;
     }
 
@@ -111,8 +115,15 @@ public class GameView extends JFrame {
                             case KeyEvent.VK_U:
                                 game.attack(P2);
                                 break;
+                            case KeyEvent.VK_ESCAPE:
+                                gameLoop.stop(1, 2);
                         }
                         break;
+                    case 2:
+                        switch (keyEvent.getKeyCode()) {
+                            case KeyEvent.VK_ESCAPE:
+                                gameLoop.stop(2, 1);
+                        }
                 }
 
             }
@@ -170,6 +181,19 @@ public class GameView extends JFrame {
                         }
                         else login.getWorld().state = 0;
                         break;
+                    case 1:
+                        if(e.getX() >= 965 && e.getX() <= 1007 && e.getY() >= 39 && e.getY() <= 78) {   // pause
+                            gameLoop.stop(1, 2);
+                        }
+                        break;
+                    case 2:
+                        if(e.getX() >= 605 && e.getX() <= 661 && e.getY() >= 262 && e.getY() <= 314) {  // resume
+                            gameLoop.stop(2, 1);
+                        }
+                        if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 390 && e.getY() <= 456) {  // login
+                            gameLoop.stop(2, 0);
+                        }
+                        break;
                 }
             }
         });
@@ -178,16 +202,28 @@ public class GameView extends JFrame {
     public static class Canvas extends JPanel implements GameLoop.View {
         private World world;
         private LoginWorld loginWorld;
+        private int running;
+        private Pause pause;
 
         @Override
-        public void render(World world) {
+        public void render(int running, World world) {
+            this.running = running;
             this.world = world;
             repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
         }
 
         @Override
-        public void render(LoginWorld loginWorld) {
+        public void render(int running, LoginWorld loginWorld) {
+            this.running = running;
             this.loginWorld = loginWorld;
+            repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
+        }
+
+        @Override
+        public void render(int running, Pause pause) {
+            this.running = running;
+            this.pause = pause;
+            this.world = pause.getWorld();
             repaint(); // ask the JPanel to repaint, it will invoke paintComponent(g) after a while.
         }
 
@@ -198,8 +234,17 @@ public class GameView extends JFrame {
             g.setColor(Color.WHITE); // paint background with all white
             g.fillRect(0, 0, GameView.WIDTH, GameView.HEIGHT);
 
-            if(world != null) world.render(g); // ask the world to paint itself and paint the sprites on the canvas
-            else if(loginWorld != null) loginWorld.render(g);
+            switch (running) {
+                case 0:
+                    if(loginWorld != null) loginWorld.render(g);
+                    break;
+                case 1:
+                    if(world != null) world.render(g);
+                    break;
+                case 2:
+                    if(world != null) pause.render(g);
+                    break;
+            }
         }
     }
 }

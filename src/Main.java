@@ -1,6 +1,7 @@
 import controller.Game;
 import controller.GameLoop;
 import controller.Login;
+import controller.Pause;
 import knight.Attacking;
 import knight.Knight;
 import knight.KnightCollisionHandler;
@@ -88,10 +89,10 @@ public class Main {
         LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.png");
 
         Game game = new Game(world, p1, p2);  // controller
-
         Login login = new Login(loginWorld);
-        GameLoop gameLoop = new GameLoop(login, game);
-        GameView view = new GameView(login, game);  // view
+        Pause pause = new Pause(world);
+        GameLoop gameLoop = new GameLoop(login, game, pause);
+        GameView view = new GameView(login, game, pause);  // view
         gameLoop.start();  // run the game and the game loop
         view.launch(); // launch the GUI
     }
