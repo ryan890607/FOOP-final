@@ -74,7 +74,7 @@ public class GameLoop {
                         view.render(G1, world);
                         delay(15);
                         if(!games.get(G1-1).getWorld().getPlayer().isAlive()) {
-                            running = PAUSE;
+                            stop(G1, PAUSE);
                         }
                     }
                     from = G1;
@@ -88,7 +88,7 @@ public class GameLoop {
                         view.render(G2, world);
                         delay(15);
                         if(!games.get(G2-1).getWorld().getPlayer().isAlive()) {
-                            running = PAUSE;
+                            stop(G2, PAUSE);
                         }
                     }
                     from = G2;

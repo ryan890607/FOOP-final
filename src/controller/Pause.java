@@ -48,7 +48,7 @@ public class Pause {
     }
 
     public World getWorld() {
-        System.out.print(nowGame);
+        //System.out.print(nowGame);
         return games.get(nowGame-1).getWorld();
     }
 

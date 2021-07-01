@@ -130,7 +130,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
 
 
         if (hpBar.isDead()) {
-            attacker.getEXP(50);
+            //attacker.getEXP(50);
             AudioPlayer.playSounds(DIE);
             fsm.trigger(DIEQQ);
         } else {

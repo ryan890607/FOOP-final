@@ -89,4 +89,6 @@ public abstract class Sprite {
 
     public Direction getResponseDirection(){ return null; };
 
+    public void getEXP(int exp) {}
+
 }

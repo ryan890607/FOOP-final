@@ -194,7 +194,7 @@ public class GameView extends JFrame {
                         break;
                     case 100:
                         if(pause.games.get(pause.nowGame-1).getPlayer(P1).isAlive()) {
-                            System.out.print(pause.nowGame-1);
+                            //System.out.print(pause.nowGame-1);
                             if(e.getX() >= 605 && e.getX() <= 661 && e.getY() >= 262 && e.getY() <= 314) {  // resume
                                 gameLoop.stop(100, pause.nowGame);
                             }
