@@ -35,7 +35,7 @@ public class Main {
         addAudioByFilePath(IronBoar.WAIL, new File("assets/audio/wail.wav"));
         addAudioByFilePath(Knight.JUMP, new File("assets/audio/jump.wav"));
         addAudioByFilePath(LoginWorld.BGM, new File("assets/audio/LoginTheme.wav"));
-		addAudioByFilePath(Ironboar.DIE, new File("assets/audio/iron_die.wav"));
+		addAudioByFilePath(IronBoar.DIE, new File("assets/audio/iron_die.wav"));
 		addAudioByFilePath(StarPixie.DIE, new File("assets/audio/star_die.wav"));
 
         // initialization
