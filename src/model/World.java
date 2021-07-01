@@ -247,8 +247,8 @@ public class World {
             sprite.setLocation(new Point(sprite.getX()+sxtemp, sprite.getY()+sytemp-768));
         }
         sx = sxtemp; sy = sytemp;
-        g.setColor(Color.black);
-        g.fillRect(0, 0, 128, 96);
+        BufferedImage bg = resizeImage((BufferedImage)background, background.getWidth(null)/16, background.getHeight(null)/16);
+        g.drawImage(bg, 0, 0, null);
         for (Sprite sprite : sprites) {
             g.setColor(Color.RED);
             Point p = sprite.getLocation();
@@ -275,6 +275,8 @@ public class World {
         g.setColor(Color.green);
         Point p = player.getLocation();
         g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
+        g.setColor(Color.black);
+        g.drawOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
 
 
         g.drawImage(pause, 950, 0, null);
