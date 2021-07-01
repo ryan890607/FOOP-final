@@ -296,7 +296,7 @@ public class World {
         g.drawImage(pl, 365, 655, null);
         g.setColor(Color.black);
         g.setFont(new Font("TimesRoman", Font.BOLD, 16));
-        g.drawString("LV. " + player.lv, 415, 700); //player.exp + "/" + player.lv*100
+        g.drawString("LV. " + player.lv, 415, 680); //player.exp + "/" + player.lv*100
         g.drawString("exp ", 480, 675);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
@@ -328,6 +328,30 @@ public class World {
         g.drawString("MP ", 480, 720);
         g.drawString(hpBar.getHp() + "/" + player.KNIGHT_HP, 520, 700);
         g.drawString(hpBar.getMp() + "/" + player.KNIGHT_MP, 520, 720);
+
+        if(player.levelUping > 0) {
+            player.levelUping--;
+            Image lvup;
+            try {
+                lvup = ImageIO.read(new File("assets/lvup/" + player.lv + ".png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(lvup, 290, 80, null);
+        }
+
+        if(player.lv >= 1) {
+
+        }
+        if(player.lv >= 3) {
+            Image twoStepJump;
+            try {
+                twoStepJump = ImageIO.read(new File("assets/skillicon/2stepjump.jpg"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(twoStepJump, 415, 690, null);
+        }
 
     }
 

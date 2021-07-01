@@ -26,8 +26,8 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Knight extends HealthPointSprite {
-    public int KNIGHT_HP = 20000;
-    public int KNIGHT_MP = 20000;
+    public int KNIGHT_HP = 1000;
+    public int KNIGHT_MP = 1000;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
@@ -37,7 +37,7 @@ public class Knight extends HealthPointSprite {
     public int fallCount;
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
     public static final String JUMP = "jump";
-    public int lv = 1, exp = 0;
+    public int lv = 1, exp = 0, levelUping = 0;
 
 
     private Direction responseDirection;
@@ -46,7 +46,7 @@ public class Knight extends HealthPointSprite {
     }
 
     public Knight(int damage, Point location) {
-        super(20000, 20000, true);
+        super(1000, 1000, true);
         this.damage = damage;
         this.location = location;
         shape = new SpriteShape(new Dimension(300, 300),
@@ -223,6 +223,7 @@ public class Knight extends HealthPointSprite {
         hpBar.setMax(KNIGHT_HP, KNIGHT_MP);
         hpBar.setHp(KNIGHT_HP);
         hpBar.setMp(KNIGHT_MP);
-        damage += 100;
+        damage += 50;
+        levelUping = 100;
     }
 }
