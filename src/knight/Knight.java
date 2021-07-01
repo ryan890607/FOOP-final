@@ -26,8 +26,8 @@ import static utils.ImageStateUtils.imageStatesFromFolder;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class Knight extends HealthPointSprite {
-    public static final int KNIGHT_HP = 2000;
-    public static final int KNIGHT_MP = 1000;
+    public static final int KNIGHT_HP = 10000;
+    public static final int KNIGHT_MP = 10000;
     private final SpriteShape shape;
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
