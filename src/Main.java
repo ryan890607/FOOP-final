@@ -53,19 +53,29 @@ public class Main {
 
 	    obstacleCount = 2;
 	    d = Direction.LEFT;
-    	ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
+    	    ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
 	    for (int i = 0; i < obstacleCount; i++) {
-	        o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((200+i*900)%2048, (250+i*700)%1536), d));
+		if (i == 0)
+	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445)%2048, (250)%1536), d));
+		else
+	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445+750)%2048, (250+300)%1536), d));
+
 	        if (d == Direction.RIGHT)  d = Direction.LEFT;
 	        else
 	            d = Direction.RIGHT;
 	    }
 
-	    obstacleCount = 2;
+	    obstacleCount = 3;
 	    d = Direction.LEFT;
 	    ArrayList<Obstacle3> o3 = new ArrayList<Obstacle3>();
 	    for (int i = 0; i < obstacleCount; i++) {
-	        o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680+i*800)%2048, (950+i*1200)%1536), d));
+		if (i == 0)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680)%2048, (950)%1536), d));
+		else if (i == 1)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680+800)%2048, (950+1000)%1536), d));
+		else
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((250)%2048, (700)%1536), d));
+
 	        if (d == Direction.RIGHT)
 	            d = Direction.LEFT;
 	        else

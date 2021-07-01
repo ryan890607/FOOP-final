@@ -66,7 +66,7 @@ public class Attacking extends Sequence {
     }
 
     private Rectangle damageArea() {
-        return knight.getArea(new Dimension(87+15, 70),
+        return knight.getAttackArea(new Dimension(87+15, 70),
                 new Dimension(70, 88));
     }
 

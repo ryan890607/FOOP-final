@@ -12,6 +12,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Collection;
 
 /**
@@ -49,11 +51,31 @@ public class GameView extends JFrame {
             public void keyPressed(KeyEvent keyEvent) {
                 switch (gameLoop.running) {
                     case 0:
-                        switch (keyEvent.getKeyCode()) {
-                            case KeyEvent.VK_ENTER:
-                                login.loginSuccess();
+                        setFocusTraversalKeysEnabled(false);
+                        if(keyEvent.getKeyCode() == keyEvent.VK_ENTER) {
+                            login.loginSuccess();
+                            break;
+                        }
+                        switch (login.getWorld().state) {
+                            case 0: case 3:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 1;
+                                break;
+                            case 1:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 2;
+                                if(Character.isLetterOrDigit(keyEvent.getKeyChar()))
+                                    login.getWorld().account += keyEvent.getKeyChar();
+                                if(keyEvent.getKeyCode() == keyEvent.VK_BACK_SPACE && login.getWorld().account.length() > 0)
+                                    login.getWorld().account = login.getWorld().account.substring(0, login.getWorld().account.length()-1);
+                                break;
+                            case 2:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 3;
+                                if(Character.isLetterOrDigit(keyEvent.getKeyChar()))
+                                    login.getWorld().password += keyEvent.getKeyChar();
+                                if(keyEvent.getKeyCode() == keyEvent.VK_BACK_SPACE && login.getWorld().password.length() > 0)
+                                    login.getWorld().password = login.getWorld().password.substring(0, login.getWorld().password.length()-1);
                                 break;
                         }
+                        break;
                     case 1:
                         switch (keyEvent.getKeyCode()) {
                             case KeyEvent.VK_W:
@@ -98,13 +120,6 @@ public class GameView extends JFrame {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 switch (gameLoop.running) {
-                    case 0:
-                        switch (keyEvent.getKeyCode()) {
-                            case KeyEvent.VK_ENTER:
-                                login.loginSuccess();
-                                break;
-                        }
-                        break;
                     case 1:
                         switch (keyEvent.getKeyCode()) {
                             case KeyEvent.VK_W:
@@ -132,6 +147,28 @@ public class GameView extends JFrame {
                                 game.stopKnight(P2, Direction.RIGHT);
                                 break;
                         }
+                        break;
+                }
+            }
+        });
+
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                //System.out.println(e.getX() + "," + e.getY());
+                switch (gameLoop.running) {
+                    case 0:
+                        if(e.getX() >= 565 && e.getX() <= 756 && e.getY() >= 330 && e.getY() <= 361) {      // account
+                            login.getWorld().state = 1;
+                        }
+                        else if(e.getX() >= 565 && e.getX() <= 756 && e.getY() >= 373 && e.getY() <= 398) { // password
+                            login.getWorld().state = 2;
+                        }
+                        else if(e.getX() >= 778 && e.getX() <= 874 && e.getY() >= 340 && e.getY() <= 383) { // confirm
+                            login.loginSuccess();
+                        }
+                        else login.getWorld().state = 0;
                         break;
                 }
             }

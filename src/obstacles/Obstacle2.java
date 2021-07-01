@@ -41,16 +41,22 @@ public class Obstacle2 extends Obstacle {
 	public void collisionHandler(Point originalLocation, Sprite from) {
 	    Rectangle body = from.getBody();
 	    if (this.face == Direction.LEFT) {
-	        if (body.x + body.width - this.location.x < 105 && body.y + body.height - this.location.y < 175)
+	        if (body.x + body.width - this.location.x < 105 && body.y + body.height - this.location.y < 165)
 			return;
-		else if (body.x + body.width - this.location.x < 210 && body.y + body.height - this.location.y < 90)
+		else if (body.x + body.width - this.location.x < 210 && body.y + body.height - this.location.y < 75)
 			return;
 	    } else {
-	        if (this.location.x + this.size.width - body.x < 105 && body.y + body.height - this.location.y < 170)
+	        if (this.location.x + this.size.width - body.x < 105 && body.y + body.height - this.location.y < 165)
 			return;
-		else if (this.location.x + this.size.width - body.x < 210 && body.y + body.height - this.location.y < 90)
+		else if (this.location.x + this.size.width - body.x < 210 && body.y + body.height - this.location.y < 75)
 			return;
 	    }
+	    from.setLocation(originalLocation);
+	    if (from instanceof Knight)
+	        ((Knight)from).fallCount = -1;
+	}
+}
+	    
 	/*
 	    Rectangle range = from.getRange();
             int offsetLeft = range.x + range.width - this.getLocation().x;
@@ -88,13 +94,12 @@ public class Obstacle2 extends Obstacle {
 	    if (offsetDown == min)
                 from.setLocation(new Point(from.getX(), from.getY() + offsetDown));
 	*/  
-	    
+	   
+	    //Rectangle range = from.getRange();
+	    //Point newPoint = new Point(2 * originalLocation.x - range.x, 2 * originalLocation.y - range.y);
+            //from.setLocation(newPoint);
+        
 
-	    Rectangle range = from.getRange();
-	    Point newPoint = new Point(2 * originalLocation.x - range.x, 2 * originalLocation.y - range.y);
-            from.setLocation(newPoint);
-        }
-}
         /*    
 	 *  if (from instanceof Knight) {
                 Rectangle body = from.getBody();

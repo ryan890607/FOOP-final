@@ -41,10 +41,12 @@ public class Obstacle3 extends Obstacle {
 	}
 
 	public void collisionHandler(Point originalLocation, Sprite from) {
-            //from.setLocation(originalLocation);
+            from.setLocation(originalLocation);
+	    if (from instanceof Knight)
+	        ((Knight)from).fallCount = -1;
             
-            Rectangle range = from.getRange();
-	    Point newPoint = new Point(range.x + 2 * (originalLocation.x - range.x), range.y + 2 * (originalLocation.y - range.y));
-            from.setLocation(newPoint);
+            //Rectangle range = from.getRange();
+	    //Point newPoint = new Point(range.x + 2 * (originalLocation.x - range.x), range.y + 2 * (originalLocation.y - range.y));
+            //from.setLocation(newPoint);
 	}
 }
