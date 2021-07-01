@@ -32,7 +32,7 @@ public class Attacking extends Sequence {
                     starPixie.setFace(Direction.LEFT);
                 }
             } else if (currentPosition == 6){
-                starPixie.getWorld().addSprite(new Magic(start, end, "assets/monster/Star_Pixie", 120));
+                starPixie.getWorld().addSprite(new Magic(start, end, "assets/monster/Star_Pixie", 70, false));
             }
             super.update();
 

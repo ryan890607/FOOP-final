@@ -23,7 +23,7 @@ public class Magic extends Sprite implements Dangerous {
     private final SpriteShape shape;
     private int damage;
 
-    public Magic(Point start, Point end, String folderName, int damage){
+    public Magic(Point start, Point end, String folderName, int damage, boolean endOnly){
         this.damage = damage;
         setLocation(start);
         this.end = end;
@@ -35,7 +35,7 @@ public class Magic extends Sprite implements Dangerous {
                 new Attacking(this, imageStatesFromFolder(folderName + "/magic", imageRenderer)));
         ending = new WaitingPerFrame(2,
                 new Ending(this, imageStatesFromFolder(folderName + "/magic_end", imageRenderer)));
-        currentState = attacking;
+        currentState = endOnly ? ending : attacking;
     }
     public int getDamage(){
         return damage;
