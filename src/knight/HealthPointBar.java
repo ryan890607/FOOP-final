@@ -8,8 +8,8 @@ import java.awt.*;
  * @author - johnny850807@gmail.com (Waterball)
  */
 public class HealthPointBar extends Sprite {
-    private final int maxHp;
-    private final int maxMp;
+    private int maxHp;
+    private int maxMp;
     public final double threshold = 0.1;
     private Sprite owner;
     private int hp;
@@ -25,8 +25,15 @@ public class HealthPointBar extends Sprite {
         this.owner = owner;
     }
 
+    public void setMax(int hp, int mp) {
+        this.maxHp = hp;
+        this.maxMp = mp;
+    }
     public void setHp(int hp) {
         this.hp = hp;
+    }
+    public void setMp(int mp) {
+        this.mp = mp;
     }
 
     @Override

@@ -135,6 +135,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
 
 
         if (hpBar.isDead()) {
+            attacker.getEXP(80);
             AudioPlayer.playSounds(DIE);
             fsm.trigger(DIEQQ);
         } else {
