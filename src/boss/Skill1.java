@@ -46,7 +46,6 @@ public class Skill1 extends Sequence {
     @Override
     protected void onSequenceEnd() {
         currentPosition = 0;
-        System.out.println("yes");
         if (randomGenerator.nextInt(100) % 4 == 0)
             boss.approach();
         else

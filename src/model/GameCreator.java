@@ -17,7 +17,7 @@ public class GameCreator {
     }
 
     public Game create(int id) {
-        Knight p1 = new Knight(300, new Point(0, 400+768));
+        Knight p1 = new Knight(300, new Point(0, 400+730));
         //Knight p2 = new Knight(300, new Point(300, 300+768));
         IronBoar m1 = new IronBoar(100, new Point(300, 150));
         IronBoar m2 = new IronBoar(100, new Point(500, 150));

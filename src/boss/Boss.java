@@ -44,7 +44,7 @@ public class Boss extends HealthPointSprite implements Dangerous {
         this.location = location;
         walkingDirection = LEFT;
         shape = new SpriteShape(new Dimension(450, 450),
-                new Dimension(50, 50), new Dimension(350, 350));
+                new Dimension(150, 50), new Dimension(150, 350));
         fsm = new FiniteStateMachine();
         //fsm_jump = new FiniteStateMachine();
 

@@ -59,7 +59,7 @@ public class Skill_I extends Sequence {
     }
 
     private Rectangle damageArea() {
-        return knight.getAttackArea(new Dimension(87+15, 10),
+        return knight.getAttackArea(new Dimension(87+15+50+15, 70),
                 new Dimension(180, 140));
     }
 
