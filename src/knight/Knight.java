@@ -225,7 +225,4 @@ public class Knight extends HealthPointSprite {
         hpBar.setMp(KNIGHT_MP);
         damage += 100;
     }
-
-
-
 }

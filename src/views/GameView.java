@@ -173,7 +173,7 @@ public class GameView extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                System.out.println(e.getX() + "," + e.getY());
+                //System.out.println(e.getX() + "," + e.getY());
                 switch (gameLoop.running) {
                     case 0:
                         if(e.getX() >= 565 && e.getX() <= 756 && e.getY() >= 330 && e.getY() <= 361) {      // account
@@ -203,7 +203,7 @@ public class GameView extends JFrame {
                                 gameLoop.restart(pause.nowGame-1);
                                 games = gameLoop.games;
                                 games.get(pause.nowGame-1).setView(canvas);
-                                gameLoop.stop(100, pause.nowGame);
+                                gameLoop.stop(0, pause.nowGame);
                             }
                             if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 419 && e.getY() <= 486) {  // login
                                 gameLoop.stop(100, 0);
@@ -215,7 +215,7 @@ public class GameView extends JFrame {
                                 gameLoop.restart(pause.nowGame-1);
                                 games = gameLoop.games;
                                 games.get(pause.nowGame-1).setView(canvas);
-                                gameLoop.stop(100, pause.nowGame);
+                                gameLoop.stop(0, pause.nowGame);
                             }
                             if(e.getX() >= 358 && e.getX() <= 606 && e.getY() >= 419 && e.getY() <= 486) {  // login
                                 AudioPlayer.stopSounds(pause.games.get(pause.nowGame-1).getWorld().clip);

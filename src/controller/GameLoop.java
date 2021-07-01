@@ -63,11 +63,10 @@ public class GameLoop {
                         view.render(LOGIN, world);
                         delay(15);
                     }
-                    from = LOGIN;
                     AudioPlayer.stopSounds(getLoginWorld().clip);
                     break;
                 case G1: // game1
-                    getWorld(G1).playSound();
+                    if(from == LOGIN) getWorld(G1).playSound();
                     while (running == G1) {
                         World world = getWorld(G1);
                         world.update();
@@ -77,11 +76,10 @@ public class GameLoop {
                             stop(G1, PAUSE);
                         }
                     }
-                    from = G1;
                     if(running == LOGIN && getWorld(G1).clip != null) AudioPlayer.stopSounds(getWorld(G1).clip);
                     break;
                 case G2: // game1
-                    getWorld(G2).playSound();
+                    if(from == LOGIN) getWorld(G2).playSound();
                     while (running == G2) {
                         World world = getWorld(G2);
                         world.update();
@@ -91,7 +89,6 @@ public class GameLoop {
                             stop(G2, PAUSE);
                         }
                     }
-                    from = G2;
                     if(running == LOGIN && getWorld(G2).clip != null) AudioPlayer.stopSounds(getWorld(G2).clip);
                     break;
                 case PAUSE: // pause
@@ -99,7 +96,6 @@ public class GameLoop {
                         view.render(PAUSE, pause);
                         delay(15);
                     }
-                    from = PAUSE;
                     if(running == LOGIN && getWorld(pause.nowGame).clip != null) AudioPlayer.stopSounds(getWorld(pause.nowGame).clip);
                     break;
             }
