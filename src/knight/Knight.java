@@ -71,15 +71,13 @@ public class Knight extends HealthPointSprite {
         fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
         fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
-<<<<<<< HEAD
         fsm.addTransition(from(idle).when(SKILLU).to(skill_u_state));
         fsm.addTransition(from(walking).when(SKILLU).to(skill_u_state));
         fsm.addTransition(from(idle).when(SKILLI).to(skill_i_state));
         fsm.addTransition(from(walking).when(SKILLI).to(skill_i_state));
-=======
+
 
         jumpLV = 0;
->>>>>>> b95ed47c59c2c61a6613458473eb5a0a1cd1a9a3
         jumpStep = -1;
 	    fallCount = -1;
         int size = jumpSequence.size();
