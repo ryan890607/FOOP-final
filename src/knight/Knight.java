@@ -128,6 +128,7 @@ public class Knight extends HealthPointSprite {
         if(now < 0) return;
         if(now == 0) AudioPlayer.playSounds(JUMP);
         world.jump(this, new Dimension(0, jumpSequence.get(now)));
+	fallCount = -1;
         jumpStep = now == jumpSequence.size()-1? -1:now+1;
         if (jumpStep < 0) {
             fallCount = 0;
