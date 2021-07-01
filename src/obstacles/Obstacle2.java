@@ -43,22 +43,23 @@ public class Obstacle2 extends Obstacle {
 	    if (this.face == Direction.LEFT) {
 	        if (body.x + body.width - this.location.x < 105 && body.y + body.height - this.location.y < 165)
 			return;
-		else if (body.x + body.width - this.location.x < 210 && body.y + body.height - this.location.y < 75)
+		else if (body.x + body.width - this.location.x < 220 && body.y + body.height - this.location.y < 75)
 			return;
 	    } else {
 	        if (this.location.x + this.size.width - body.x < 105 && body.y + body.height - this.location.y < 165)
 			return;
-		else if (this.location.x + this.size.width - body.x < 210 && body.y + body.height - this.location.y < 75)
+		else if (this.location.x + this.size.width - body.x < 220 && body.y + body.height - this.location.y < 75)
 			return;
 	    }
 	    from.setLocation(originalLocation);
 	    body = from.getBody();
-	    if (from instanceof Knight) {
-	        ((Knight)from).jumpLV = 0;
-	        ((Knight)from).jumpStep = -1;
-	    }
-	    if (from instanceof Knight && body.x + body.width > this.getLocation().x && body.x < this.getLocation().x + this.getSize().width)
+	    if (from instanceof Knight && body.x + body.width > this.getLocation().x && body.x < this.getLocation().x + this.getSize().width) {
 	        ((Knight)from).fallCount = -1;
+		if (body.y + body.height < this.getLocation().y) {
+	            ((Knight)from).jumpLV = 0;
+	            ((Knight)from).jumpStep = -1;
+		}
+	    }
 	}
 }
 	    
