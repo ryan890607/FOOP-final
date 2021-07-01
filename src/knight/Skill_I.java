@@ -17,7 +17,7 @@ public class Skill_I extends Sequence {
     private final Knight knight;
     private final StateMachine stateMachine;
     private final Set<Integer> damagingStateNumbers = new HashSet<>(List.of(1));
-
+    public static final String SKILL_I = "skilli";
     public Skill_I(Knight knight, StateMachine stateMachine, List<? extends State> states) {
         super(states);
         this.knight = knight;
@@ -29,6 +29,7 @@ public class Skill_I extends Sequence {
     public void update() {
         if (knight.isAlive()) {
             super.update();
+            if (currentPosition == 0) AudioPlayer.playSounds(SKILL_I);;
             if (damagingStateNumbers.contains(currentPosition)) {
                 effectDamage();
             }
