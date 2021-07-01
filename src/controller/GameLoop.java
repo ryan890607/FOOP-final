@@ -74,7 +74,7 @@ public class GameLoop {
                         view.render(G1, world);
                         delay(15);
                         if(!games.get(G1-1).getWorld().getPlayer().isAlive()) {
-                            running = PAUSE;
+                            running = PAUSE; 00000
                         }
                     }
                     from = G1;
