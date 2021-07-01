@@ -87,4 +87,8 @@ public class HealthPointBar extends Sprite {
     public void addHp(int increased){
         this.hp = Math.min(this.hp + increased, maxHp);
     }
+
+    public int getHp(){
+        return hp;
+    }
 }
