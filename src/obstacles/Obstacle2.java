@@ -53,6 +53,10 @@ public class Obstacle2 extends Obstacle {
 	    }
 	    from.setLocation(originalLocation);
 	    body = from.getBody();
+	    if (from instanceof Knight) {
+	        ((Knight)from).jumpLV = 0;
+	        ((Knight)from).jumpStep = -1;
+	    }
 	    if (from instanceof Knight && body.x + body.width > this.getLocation().x && body.x < this.getLocation().x + this.getSize().width)
 	        ((Knight)from).fallCount = -1;
 	}
