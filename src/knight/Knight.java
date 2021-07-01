@@ -37,8 +37,8 @@ public class Knight extends HealthPointSprite {
     public int fallCount;
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
     public static final String JUMP = "jump";
-    public static final String SKILL_I = "skilli";
-    public static final String SKILL_U = "skillu";
+
+
     private Direction responseDirection;
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, SKILLU, SKILLI
@@ -97,14 +97,12 @@ public class Knight extends HealthPointSprite {
 
     public void skillU() {
         if (reducedMp(30)) {
-            AudioPlayer.playSounds(SKILL_U);
             fsm.trigger(SKILLU);
         }
         else fsm.trigger(STOP);
     }
     public void skillI() {
         if (reducedMp(80)) {
-            AudioPlayer.playSounds(SKILL_I);
             fsm.trigger(SKILLI);
         }
         else fsm.trigger(STOP);

@@ -14,6 +14,7 @@ public class Login {
 
     public void loginSuccess() {
         if(loginWorld.account.equals("kuo2020") && loginWorld.password.equals("0000")) gameLoop.stop(0, 1);
+        else if(loginWorld.account.equals("weebaoweewee") && loginWorld.password.equals("0000")) gameLoop.stop(0, 2);
         else loginWorld.state = 4;
     }
 
