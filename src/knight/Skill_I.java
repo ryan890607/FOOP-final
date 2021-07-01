@@ -28,8 +28,8 @@ public class Skill_I extends Sequence {
     @Override
     public void update() {
         if (knight.isAlive()) {
+            if (currentPosition == 0) AudioPlayer.playSounds(SKILL_I);
             super.update();
-            if (currentPosition == 0) AudioPlayer.playSounds(SKILL_I);;
             if (damagingStateNumbers.contains(currentPosition)) {
                 effectDamage();
             }

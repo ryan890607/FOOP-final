@@ -38,6 +38,7 @@ public class Knight extends HealthPointSprite {
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
     public static final String JUMP = "jump";
 
+
     private Direction responseDirection;
     public enum Event {
         WALK, STOP, ATTACK, DAMAGED, SKILLU, SKILLI
@@ -95,8 +96,9 @@ public class Knight extends HealthPointSprite {
     }
 
     public void skillU() {
-        if (reducedMp(30))
+        if (reducedMp(30)) {
             fsm.trigger(SKILLU);
+        }
         else fsm.trigger(STOP);
     }
     public void skillI() {
