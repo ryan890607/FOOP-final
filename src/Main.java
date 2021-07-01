@@ -35,8 +35,10 @@ public class Main {
         addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
         addAudioByFilePath(World.BGM, new File("assets/audio/background_BGM.wav"));
         addAudioByFilePath(IronBoar.WAIL, new File("assets/audio/wail.wav"));
+		addAudioByFilePath(StarPixie.DIE, new File("assets/audio/star_die.wav"));
         addAudioByFilePath(Knight.JUMP, new File("assets/audio/jump.wav"));
         addAudioByFilePath(LoginWorld.BGM, new File("assets/audio/LoginTheme.wav"));
+
 
         // initialization
 
