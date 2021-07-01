@@ -11,7 +11,7 @@ import model.World;
 public class Game {
     private final Knight p1;
     private final Knight p2;
-    private final World world;
+    private World world;
     GameLoop.View view;
     GameLoop gameLoop;
 
@@ -56,7 +56,11 @@ public class Game {
         return playerNumber == 1 ? p1 : p2;
     }
 
-    protected World getWorld() {
+    public World getWorld() {
         return world;
+    }
+
+    public void restart(World world) {
+        this.world = world;
     }
 }
