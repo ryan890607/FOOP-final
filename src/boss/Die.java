@@ -19,6 +19,7 @@ public class Die extends Sequence {
 
     @Override
     protected void onSequenceEnd() {
+        currentPosition = 0;
         boss.getWorld().removeSprite(boss);
     }
 
