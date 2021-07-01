@@ -5,6 +5,7 @@ import fsm.FiniteStateMachine;
 import fsm.ImageRenderer;
 import fsm.State;
 import fsm.WaitingPerFrame;
+import media.AudioPlayer;
 import model.*;
 
 import java.awt.*;
@@ -28,6 +29,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
     private Direction responseDirection;
     private Direction walkingDirection;
     private Sprite target;
+    public static final String DIE = "die";
 
 
 
@@ -125,6 +127,7 @@ public class StarPixie extends HealthPointSprite implements Dangerous {
 
 
         if (hpBar.isDead()) {
+            AudioPlayer.playSounds(DIE);
             fsm.trigger(DIE);
         } else {
             fsm.trigger(DAMAGED);

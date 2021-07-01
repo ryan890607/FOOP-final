@@ -30,6 +30,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
     private Direction walkingDirection;
     private Sprite target;
     public static final String WAIL = "wail";
+    public static final String DIE = "die";
 
 
 
@@ -121,6 +122,7 @@ public class IronBoar extends HealthPointSprite implements Dangerous {
 
 
         if (hpBar.isDead()) {
+            AudioPlayer.playSounds(DIE);
             fsm.trigger(DIE);
         } else {
             fsm.trigger(DAMAGED);

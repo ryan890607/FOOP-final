@@ -46,7 +46,10 @@ public class Game {
         getPlayer(playerNumber).skillI();
     }
     public void jump(int playerNumber) {
-        if(getPlayer(playerNumber).jumpStep < 0 && getPlayer(playerNumber).fallCount < 0) getPlayer(playerNumber).jump(0);
+        if(getPlayer(playerNumber).fallCount >= 0) return;
+        getPlayer(playerNumber).jumpLV++;
+        if(getPlayer(playerNumber).jumpLV < 3) getPlayer(playerNumber).jump(0);
+        else getPlayer(playerNumber).jumpLV--;
     }
 
     public Knight getPlayer(int playerNumber) {

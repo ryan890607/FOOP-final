@@ -66,6 +66,12 @@ public class LoginWorld {
             case 3:
                 g.setColor(Color.white);
                 g.drawRect(765, 310, 100, 43);
+                break;
+            case 4:
+                g.setColor(Color.red);
+                g.setFont(new Font("TimesRoman", Font.BOLD, 18));
+                g.drawString("Wrong username or password!", 565, 270);
+                break;
         }
         g.setColor(Color.black);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 14));

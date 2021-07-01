@@ -33,7 +33,8 @@ public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
     public static final String BGM = "bgm";
-    private Clip clip;
+    public Clip clip;
+    private Image pause;
 
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
@@ -43,14 +44,20 @@ public class World {
         }
         // int imgW = background.getWidth(null), imgH = background.getHeight(null);
         this.floors = floors;
-	this.stairs = stairs;
-	this.rocks = rocks;
+        this.stairs = stairs;
+        this.rocks = rocks;
         sx = 0;
         sy = background.getHeight(null);
         this.player = player;
         this.collisionHandler = collisionHandler;
         addSprite(player);
         addSprites(sprites);
+
+        try {
+            pause = ImageIO.read(new File("assets/others/pause.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void playSound() {
@@ -74,7 +81,7 @@ public class World {
         if(sx < 0) sx = 0;
         if(sx > background.getWidth(null)-1024) sx = background.getWidth(null)-1024;
 
-        if(player.jumpStep >= 0) return;
+        //if(player.jumpStep >= 0) return;
 
         if(player.getY() >= background.getHeight(null)-300) {
             sy = background.getHeight(null);
@@ -129,7 +136,7 @@ public class World {
                 to.collisionHandler(originalLocation, from);
             } else if (from instanceof Knight) {
 	        if (originalBody.x + body.width >= range.x && originalBody.x <= range.x + range.width && (body.x + body.width < range.x || body.x > range.x + range.width))
-		    if (originalBody.y < range.y && range.y - originalBody.y - body.height < 20)
+		    if (originalBody.y + body.height < range.y + range.height && range.y - originalBody.y - body.height < 20)
 			((Knight)from).fallCount = 0;  //start falling
 	    }
         }
@@ -140,7 +147,7 @@ public class World {
                 to.collisionHandler(originalLocation, from);
             } else if (from instanceof Knight) {
 	        if (originalBody.x + body.width >= range.x && originalBody.x <= range.x + range.width && (body.x + body.width < range.x || body.x > range.x + range.width))
-		    if (originalBody.y < range.y && range.y - originalBody.y - body.height < 20)
+		    if (originalBody.y + body.height < range.y + range.height && range.y - originalBody.y - body.height < 20)
 			((Knight)from).fallCount = 0;  //start falling
             }
         }
@@ -238,5 +245,7 @@ public class World {
         g.setColor(Color.green);
         Point p = player.getLocation();
         g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
+
+        g.drawImage(pause, 950, 0, null);
     }
 }

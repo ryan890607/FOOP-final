@@ -1,6 +1,7 @@
 import controller.Game;
 import controller.GameLoop;
 import controller.Login;
+import controller.Pause;
 import knight.Attacking;
 import knight.Knight;
 import knight.KnightCollisionHandler;
@@ -41,41 +42,46 @@ public class Main {
         Knight p2 = new Knight(300, new Point(300, 300+768));
         IronBoar m1 = new IronBoar(100, new Point(300, 150));
         IronBoar m2 = new IronBoar(100, new Point(500, 150));
-        StarPixie m3 = new StarPixie(50, new Point(300, 350));
+        StarPixie m3 = new StarPixie(50, new Point(300, 430));
 		MonsterGenerator generator = new MonsterGenerator();
-
-
-
-
         int obstacleCount = 1;
 	    Direction d = Direction.RIGHT;
 	    ArrayList<Obstacle1> o1 = new ArrayList<Obstacle1>();
 	    o1.add(new Obstacle1("assets/obstacle/Obstacle4.jpg", new Point(0, 1350), d));
 
-	    obstacleCount = 2;
-	    d = Direction.LEFT;
+	    obstacleCount = 3;
+	    d = Direction.RIGHT;
     	    ArrayList<Obstacle2> o2 = new ArrayList<Obstacle2>();
 	    for (int i = 0; i < obstacleCount; i++) {
 		if (i == 0)
-	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445)%2048, (250)%1536), d));
-		else
+			;
+	            //o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((250)%2048, (500)%1536), d));
+		else if (i == 1)
 	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((445+750)%2048, (250+300)%1536), d));
+		else if (i == 2)
+	            o2.add(new Obstacle2("assets/obstacle/Obstacle2.png", new Point((800)%2048, (200)%1536), d));
 
 	        if (d == Direction.RIGHT)  d = Direction.LEFT;
 	        else
 	            d = Direction.RIGHT;
 	    }
 
-	    obstacleCount = 3;
+	    obstacleCount = 6;
 	    d = Direction.LEFT;
 	    ArrayList<Obstacle3> o3 = new ArrayList<Obstacle3>();
 	    for (int i = 0; i < obstacleCount; i++) {
 		if (i == 0)
-	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680)%2048, (950)%1536), d));
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680)%2048, (800)%1536), d));
 		else if (i == 1)
 	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((680+800)%2048, (950+1000)%1536), d));
-		else
-	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((250)%2048, (700)%1536), d));
+		else if (i == 2)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((250)%2048, (1036)%1536), d));
+		else if (i == 3)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((400)%2048, (330)%1536), d));
+		else if (i == 4)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((100)%2048, (600)%1536), d));
+		else if (i == 5)
+	            o3.add(new Obstacle3("assets/obstacle/Obstacle3.png", new Point((0)%2048, (330)%1536), d));
 
 	        if (d == Direction.RIGHT)
 	            d = Direction.LEFT;
@@ -89,10 +95,10 @@ public class Main {
 		LoginWorld loginWorld = new LoginWorld("assets/background/MapleStory.png");
 
         Game game = new Game(world, p1, p2);  // controller
-
         Login login = new Login(loginWorld);
-        GameLoop gameLoop = new GameLoop(login, game);
-        GameView view = new GameView(login, game);  // view
+        Pause pause = new Pause(world);
+        GameLoop gameLoop = new GameLoop(login, game, pause);
+        GameView view = new GameView(login, game, pause);  // view
         gameLoop.start();  // run the game and the game loop
         view.launch(); // launch the GUI
     }

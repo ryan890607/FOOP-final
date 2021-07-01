@@ -31,6 +31,7 @@ public class Knight extends HealthPointSprite {
     private final FiniteStateMachine fsm;
     private final Set<Direction> directions = new CopyOnWriteArraySet<>();
     private final int damage;
+    public int jumpLV;
     public int jumpStep;
     public int fallCount;
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
@@ -50,8 +51,9 @@ public class Knight extends HealthPointSprite {
 
         ImageRenderer imageRenderer = new KnightImageRenderer(this);
         State idle = new WaitingPerFrame(8,
-                new Idle(imageStatesFromFolder("assets/idle", imageRenderer)));
-        State walking = new WaitingPerFrame(4,
+                new Idle(this, imageStatesFromFolder("assets/idle", imageRenderer)));
+        State walking = new WaitingPerFrame(1,
+
                 new Walking(this, imageStatesFromFolder("assets/walking", imageRenderer)));
         State attacking = new WaitingPerFrame(2,
                 new Attacking(this, fsm, imageStatesFromFolder("assets/attack", imageRenderer)));
@@ -69,12 +71,17 @@ public class Knight extends HealthPointSprite {
         fsm.addTransition(from(idle).when(DAMAGED).to(damaged));
         fsm.addTransition(from(walking).when(DAMAGED).to(damaged));
         fsm.addTransition(from(attacking).when(DAMAGED).to(damaged));
+<<<<<<< HEAD
         fsm.addTransition(from(idle).when(SKILLU).to(skill_u_state));
         fsm.addTransition(from(walking).when(SKILLU).to(skill_u_state));
         fsm.addTransition(from(idle).when(SKILLI).to(skill_i_state));
         fsm.addTransition(from(walking).when(SKILLI).to(skill_i_state));
+=======
+
+        jumpLV = 0;
+>>>>>>> b95ed47c59c2c61a6613458473eb5a0a1cd1a9a3
         jumpStep = -1;
-	fallCount = -1;
+	    fallCount = -1;
         int size = jumpSequence.size();
         for(int i = size-2; i >= 0; --i) jumpSequence.add(-(jumpSequence.get(i)));
     }
@@ -111,8 +118,8 @@ public class Knight extends HealthPointSprite {
 
         if(this.world == null) return;
         jump(jumpStep);
-	if (fallCount >= 0)
-	    fall(fallCount++);
+        if (fallCount >= 0)
+            fall(fallCount++);
         if(getX() < 0) location.x = 0;
         if(getY() < 0) location.y = 0;
         if(getX() > world.getBackground().getWidth(null)-getRange().width) location.x = world.getBackground().getWidth(null)-getRange().width;
@@ -124,6 +131,10 @@ public class Knight extends HealthPointSprite {
         if(now == 0) AudioPlayer.playSounds(JUMP);
         world.jump(this, new Dimension(0, jumpSequence.get(now)));
         jumpStep = now == jumpSequence.size()-1? -1:now+1;
+        if (jumpStep < 0) {
+            fallCount = 0;
+            jumpLV = 0;
+        }
     }
 
     public void fall(int count) {
@@ -131,6 +142,7 @@ public class Knight extends HealthPointSprite {
 		return;
 	world.jump(this, new Dimension(0, count));
     }
+
 
     @Override
     public void render(Graphics g) {
