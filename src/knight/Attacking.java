@@ -20,7 +20,7 @@ public class Attacking extends Sequence {
     public static final String AUDIO_SWORD_CLASH_2 = "sword-clash2";
     private final Knight knight;
     private final StateMachine stateMachine;
-    private final Set<Integer> damagingStateNumbers = new HashSet<>(List.of(6));
+    private final Set<Integer> damagingStateNumbers = new HashSet<>(List.of(3));
 
     public Attacking(Knight knight, StateMachine stateMachine, List<? extends State> states) {
         super(states);

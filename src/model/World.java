@@ -41,6 +41,7 @@ public class World {
     public Clip clip;
     private Image pause;
     private Sprite boss;
+    private boolean bossAppear = false;
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
             background = ImageIO.read(new File(backgroundName));
@@ -64,6 +65,7 @@ public class World {
             throw new RuntimeException(e);
         }
         boss = new Boss(500, new Point(1700, 800));
+
     }
 
     public void playSound() {
@@ -121,7 +123,10 @@ public class World {
                 break;
             }
         }
-        if (!monsterExist) addSprite(boss);
+        if (!monsterExist && bossAppear) {
+            bossAppear = false;
+            addSprite(boss);
+        }
         //sprite.setWorld(null);
     }
 
