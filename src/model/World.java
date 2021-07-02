@@ -45,9 +45,10 @@ public class World {
     private final List<Sprite> sprites = new CopyOnWriteArrayList<>();
     private final CollisionHandler collisionHandler;
     public static final String BGM = "bgm";
+    public static final String BOSS_BGM = "boss";
     public Clip clip;
     private Image pause;
-    private Sprite boss;
+    private Boss boss;
     private boolean bossAppear = false;
     public ArrayList<DropItem> dropItems = new ArrayList<>();
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
@@ -77,7 +78,8 @@ public class World {
     }
 
     public void playSound() {
-        clip = AudioPlayer.playSoundsloop(BGM);
+        if(bossAppear) clip = AudioPlayer.playSoundsloop(BOSS_BGM);
+        else clip = AudioPlayer.playSoundsloop(BGM);
     }
 
     public void update() {
@@ -134,16 +136,16 @@ public class World {
         if (!monsterExist && !bossAppear) {
             bossAppear = true;
             addSprite(boss);
+            AudioPlayer.stopSounds(clip);
+            clip = AudioPlayer.playSoundsloop(BOSS_BGM);
         }
         //sprite.setWorld(null);
         if (sprite instanceof IronBoar) {
             dropItems.add(new MpPotion(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
-
         else if (sprite instanceof StarPixie) {
             dropItems.add(new HpPotion(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
-
         else if (sprite instanceof Boss) {
             dropItems.add(new Ring(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
@@ -292,7 +294,8 @@ public class World {
         for (Sprite sprite : sprites) {
             g.setColor(Color.RED);
             Point p = sprite.getLocation();
-            g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 6, 6);
+            if(sprite instanceof Boss) g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 16, 16);
+            else g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 6, 6);
         }
         for(Obstacle obstacle : floors) {
             Point p = obstacle.getLocation();
@@ -335,7 +338,7 @@ public class World {
         g.drawImage(pl, 365, 655, null);
         g.setColor(Color.black);
         g.setFont(new Font("TimesRoman", Font.BOLD, 16));
-        g.drawString("LV. " + player.lv, 415, 680); //player.exp + "/" + player.lv*100
+        g.drawString("LV. " + player.lv, 415, 700); //player.exp + "/" + player.lv*100
         g.drawString("exp ", 480, 675);
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
@@ -368,6 +371,38 @@ public class World {
         g.drawString(hpBar.getHp() + "/" + player.KNIGHT_HP, 520, 700);
         g.drawString(hpBar.getMp() + "/" + player.KNIGHT_MP, 520, 720);
 
+
+        //boss
+        if(bossAppear) {
+            g.setColor(Color.pink);
+            g.fillRect(350, 0, 300, 80);
+            g.setColor(Color.black);
+            g.drawRect(350, 0, 300, 80);
+            Image bo;
+            try {
+                bo = ImageIO.read(new File("assets/others/boss.png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(bo, 560, -5, null);
+            g.setColor(Color.black);
+
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+            hpBar = boss.hpBar;
+            width = (int) (hpBar.getHp() * 150 / boss.HP);
+            g.setColor(Color.RED);
+            g.fillRect(420, 35, 150, 15);
+            g.setColor(Color.GREEN);
+            g.fillRect(420, 35, width, 15);
+            g.setColor(Color.black);
+            g.drawRect(420, 35, 150, 15);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
+            g.setColor(Color.black);
+            g.drawString("HP ", 380, 50);
+            g.drawString(hpBar.getHp() + "/" + boss.HP, 430, 50);
+
+        }
+
         if(player.levelUping > 0) {
             player.levelUping--;
             Image lvup;
@@ -379,20 +414,37 @@ public class World {
             g.drawImage(lvup, 290, 80, null);
         }
 
+        g.setFont(new Font("TimesRoman", Font.BOLD, 16));
+        g.setColor(Color.gray);
         if(player.lv >= 1) {
-
+            Image skillu;
+            try {
+                skillu = ImageIO.read(new File("assets/skillicon/skillu.jpg"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(skillu, 0, 680, null);
+            g.drawString("u", 20, 675);
         }
         if(player.lv >= 2) {
-
-        }
-        if(player.lv >= 3) {
             Image twoStepJump;
             try {
                 twoStepJump = ImageIO.read(new File("assets/skillicon/2stepjump.jpg"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            g.drawImage(twoStepJump, 415, 690, null);
+            g.drawImage(twoStepJump, 50, 680, null);
+            g.drawString("space", 50, 675);
+        }
+        if(player.lv >= 3) {
+            Image skilli;
+            try {
+                skilli = ImageIO.read(new File("assets/skillicon/skilli.jpg"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(skilli, 100, 680, null);
+            g.drawString("i", 120, 675);
         }
 
         int hp = player.hpPotionCount, mp = player.mpPotionCount, ring = player.ringCount;

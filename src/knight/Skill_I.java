@@ -40,8 +40,8 @@ public class Skill_I extends Sequence {
     public void render(Graphics g) {
         super.render(g);
         Rectangle damageArea = damageArea();
-        g.setColor(Color.BLUE);
-        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
+//        g.setColor(Color.BLUE);
+//        g.drawRect(damageArea.x, damageArea.y, damageArea.width, damageArea.height);
     }
 
     private void effectDamage() {
