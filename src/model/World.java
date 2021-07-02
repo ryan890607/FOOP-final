@@ -46,6 +46,7 @@ public class World {
     private final CollisionHandler collisionHandler;
     public static final String BGM = "bgm";
     public static final String BOSS_BGM = "boss";
+    public static final String GAME_CLEAR = "gameclear";
     public Clip clip;
     private Image pause;
     private Boss boss;
@@ -150,6 +151,8 @@ public class World {
         }
         else if (sprite instanceof Boss) {
             bossDies = true;
+            AudioPlayer.stopSounds(clip);
+            AudioPlayer.playSounds(GAME_CLEAR);
             dropItems.add(new Ring(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
     }
@@ -402,7 +405,7 @@ public class World {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 16));
             g.setColor(Color.black);
             g.drawString("HP ", 380, 50);
-            g.drawString(hpBar.getHp() + "/" + boss.HP, 430, 50);
+            g.drawString(hpBar.getHp() + "/" + boss.HP, 425, 50);
 
         }
 

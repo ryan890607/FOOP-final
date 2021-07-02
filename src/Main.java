@@ -36,6 +36,7 @@ public class Main {
 		addAudioByFilePath(Skill_I.SKILL_I, new File("assets/audio/skill_i.wav"));
 		addAudioByFilePath(Skill_U.SKILL_U, new File("assets/audio/skill_u.wav"));
 		addAudioByFilePath(World.BOSS_BGM, new File("assets/audio/boss_bgm.wav"));
+		addAudioByFilePath(World.GAME_CLEAR, new File("assets/audio/gameclear.wav"));
 		GameCreator gameCreator = new GameCreator();
 
 		// initialization
