@@ -227,7 +227,7 @@ public class Knight extends HealthPointSprite {
         hpBar.setMax(KNIGHT_HP, KNIGHT_MP);
         hpBar.setHp(KNIGHT_HP);
         hpBar.setMp(KNIGHT_MP);
-        damage += 50;
+        damage += 500;
         levelUping = 100;
     }
 
