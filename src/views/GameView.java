@@ -85,9 +85,9 @@ public class GameView extends JFrame {
                         break;
                     case 1: case 2:
                         switch (keyEvent.getKeyCode()) {
-//                            case KeyEvent.VK_W:
-//                                game.moveKnight(P1, Direction.UP);
-//                                break;
+                            case KeyEvent.VK_W:
+                                games.get(gameLoop.running-1).pick(P1);
+                                break;
 //                            case KeyEvent.VK_S:
 //                                game.moveKnight(P1, Direction.DOWN);
 //                                break;
@@ -121,8 +121,17 @@ public class GameView extends JFrame {
 //                            case KeyEvent.VK_U:
 //                                game.skillU(P1);
 //                                break;
+                            case KeyEvent.VK_1:
+                                games.get(gameLoop.running-1).useHpPotion(P1);
+                                break;
+                            case KeyEvent.VK_2:
+                                games.get(gameLoop.running-1).useMpPotion(P1);
+                                break;
+                            case KeyEvent.VK_3:
+                                break;
                             case KeyEvent.VK_ESCAPE:
                                 gameLoop.stop(gameLoop.running, 100);
+                                break;
                         }
                         break;
                     case 100:
@@ -173,7 +182,7 @@ public class GameView extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                //System.out.println(e.getX() + "," + e.getY());
+                System.out.println(e.getX() + "," + e.getY());
                 switch (gameLoop.running) {
                     case 0:
                         if(e.getX() >= 565 && e.getX() <= 756 && e.getY() >= 330 && e.getY() <= 361) {      // account

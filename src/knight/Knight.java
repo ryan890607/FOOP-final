@@ -1,5 +1,9 @@
 package knight;
 
+import dropItem.DropItem;
+import dropItem.HpPotion;
+import dropItem.MpPotion;
+import dropItem.Ring;
 import fsm.FiniteStateMachine;
 import fsm.ImageRenderer;
 import fsm.State;
@@ -38,7 +42,7 @@ public class Knight extends HealthPointSprite {
     private final ArrayList<Integer> jumpSequence = new ArrayList<>(Arrays.asList(-26,-23,-22,-20,-18,-18,-15,-15,-13,-12,-10,-10,-8,-8,-6,-6,-5,-4,-3,-3,-2,-2,-1,-1,0));
     public static final String JUMP = "jump";
     public int lv = 1, exp = 0, levelUping = 0;
-
+    public int hpPotionCount = 0, mpPotionCount = 0, ringCount = 0;
 
     private Direction responseDirection;
     public enum Event {
@@ -225,5 +229,39 @@ public class Knight extends HealthPointSprite {
         hpBar.setMp(KNIGHT_MP);
         damage += 50;
         levelUping = 100;
+    }
+
+    public DropItem pickItem() {
+        int xr = getX()+getBodyOffset().width+getBodySize().width, xl = getX()+getBodyOffset().width,
+                yd = getY()+getBodyOffset().height+getBodySize().height, yu = getY()+getBodyOffset().width;
+        for(DropItem dropItem : getWorld().getDropItems()) {
+            //System.out.println(dropItem.getX() + "," + (getX()+getBodyOffset().width+getBodySize().width) + "," + dropItem.getX()+50 + "," + getX()+getBodyOffset().width);
+            if(dropItem.getX() < xr && dropItem.getX()+50 > xl && dropItem.getY() < yd && dropItem.getY()+50 > yu) {
+                if(dropItem instanceof HpPotion) {
+                    hpPotionCount++;
+                }
+                if(dropItem instanceof MpPotion) {
+                    mpPotionCount++;
+                }
+                if(dropItem instanceof Ring) {
+                    ringCount++;
+                }
+                return dropItem;
+            }
+        }
+        return null;
+    }
+
+    public void useHpPotion() {
+        if(hpPotionCount > 0) {
+            hpPotionCount--;
+            hpBar.addHp(300);
+        }
+    }
+    public void useMpPotion() {
+        if(mpPotionCount > 0) {
+            mpPotionCount--;
+            hpBar.addMp(300);
+        }
     }
 }

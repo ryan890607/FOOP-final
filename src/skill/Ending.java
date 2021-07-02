@@ -13,7 +13,7 @@ public class Ending extends Sequence {
     public Ending(Skill skill, List<ImageState> states){
         super(states);
         this.skill = skill;
-        System.out.println(currentPosition);
+        //System.out.println(currentPosition);
     }
 
 

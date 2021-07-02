@@ -1,5 +1,6 @@
 package controller;
 
+import dropItem.DropItem;
 import knight.Knight;
 import model.Direction;
 import model.Sprite;
@@ -50,6 +51,16 @@ public class Game {
         getPlayer(playerNumber).jumpLV++;
         if(getPlayer(playerNumber).jumpLV < 3) getPlayer(playerNumber).jump(0);
         else getPlayer(playerNumber).jumpLV--;
+    }
+
+    public void pick(int playerNumber) {
+        getWorld().removeItem(getPlayer(playerNumber).pickItem());
+    }
+    public void useHpPotion(int playerNumber) {
+        getPlayer(playerNumber).useHpPotion();
+    }
+    public void useMpPotion(int playerNumber) {
+        getPlayer(playerNumber).useMpPotion();
     }
 
     public Knight getPlayer(int playerNumber) {

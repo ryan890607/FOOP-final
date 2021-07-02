@@ -1,6 +1,11 @@
 package model;
 
 import boss.Boss;
+import dropItem.DropItem;
+import dropItem.HpPotion;
+import dropItem.MpPotion;
+import dropItem.Ring;
+import ironBoar.IronBoar;
 import knight.HealthPointBar;
 import knight.Knight;
 import media.AudioPlayer;
@@ -23,6 +28,8 @@ import obstacles.Obstacle;
 import obstacles.Obstacle1;
 import obstacles.Obstacle2;
 import obstacles.Obstacle3;
+import starPixie.StarPixie;
+
 import java.util.ArrayList;
 
 /**
@@ -42,6 +49,7 @@ public class World {
     private Image pause;
     private Sprite boss;
     private boolean bossAppear = false;
+    public ArrayList<DropItem> dropItems = new ArrayList<>();
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
             background = ImageIO.read(new File(backgroundName));
@@ -128,6 +136,24 @@ public class World {
             addSprite(boss);
         }
         //sprite.setWorld(null);
+        if (sprite instanceof IronBoar) {
+            dropItems.add(new MpPotion(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
+        }
+
+        else if (sprite instanceof StarPixie) {
+            dropItems.add(new HpPotion(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
+        }
+
+        else if (sprite instanceof Boss) {
+            dropItems.add(new Ring(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
+        }
+    }
+
+    public ArrayList<DropItem> getDropItems() {
+        return dropItems;
+    }
+    public void removeItem(DropItem dropItem) {
+        dropItems.remove(dropItem);
     }
 
     public void move(Sprite from, Dimension offset) {
@@ -254,7 +280,13 @@ public class World {
             sprite.render(g);
             sprite.setLocation(new Point(sprite.getX()+sxtemp, sprite.getY()+sytemp-768));
         }
+        for(DropItem dropItem : dropItems) {
+            dropItem.setLocation(new Point(dropItem.getLocation().x-sxtemp, dropItem.getLocation().y-sytemp+768));
+            dropItem.render(g);
+            dropItem.setLocation(new Point(dropItem.getLocation().x+sxtemp, dropItem.getLocation().y+sytemp-768));
+        }
         sx = sxtemp; sy = sytemp;
+
         BufferedImage bg = resizeImage((BufferedImage)background, background.getWidth(null)/16, background.getHeight(null)/16);
         g.drawImage(bg, 0, 0, null);
         for (Sprite sprite : sprites) {
@@ -280,6 +312,8 @@ public class World {
             BufferedImage img = resizeImage((BufferedImage)obstacle.getImage(), w/16, h/16);
             g.drawImage(img, (int)(p.getX()/16), (int)(p.getY()/16), null);
         }
+
+
         g.setColor(Color.green);
         Point p = player.getLocation();
         g.fillOval((int)(p.getX()/16), (int)(p.getY()/16), 8, 8);
@@ -348,6 +382,9 @@ public class World {
         if(player.lv >= 1) {
 
         }
+        if(player.lv >= 2) {
+
+        }
         if(player.lv >= 3) {
             Image twoStepJump;
             try {
@@ -358,6 +395,49 @@ public class World {
             g.drawImage(twoStepJump, 415, 690, null);
         }
 
+        int hp = player.hpPotionCount, mp = player.mpPotionCount, ring = player.ringCount;
+        g.setColor(Color.yellow);
+        g.fillRect(860, 680, 150, 50);
+        g.setColor(Color.black);
+        g.drawRect(860, 680, 50, 50);
+        g.drawRect(910, 680, 50, 50);
+        g.drawRect(960, 680, 50, 50);
+
+        g.setFont(new Font("TimesRoman", Font.BOLD, 16));
+        g.setColor(Color.black);
+        Image im;
+        try {
+            im = ImageIO.read(new File("assets/dropitem/33.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        g.drawImage(im, 860, 680, null);
+        g.setColor(Color.gray);
+        g.drawString("1", 895, 695);
+        g.setColor(Color.black);
+        g.drawString("" + hp, 895, 730);
+
+        try {
+            im = ImageIO.read(new File("assets/dropitem/22.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        g.drawImage(im, 910, 680, null);
+        g.setColor(Color.gray);
+        g.drawString("2", 945, 695);
+        g.setColor(Color.black);
+        g.drawString("" + mp, 945, 730);
+
+        try {
+            im = ImageIO.read(new File("assets/dropitem/11.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        g.drawImage(im, 960, 680, null);
+        g.setColor(Color.gray);
+        g.drawString("3", 995, 695);
+        g.setColor(Color.black);
+        g.drawString("" + ring, 995, 730);
     }
 
     public BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
