@@ -109,6 +109,9 @@ public class GameView extends JFrame {
                             case KeyEvent.VK_U:
                                 games.get(gameLoop.running-1).skillU(P1);
                                 break;
+                            case KeyEvent.VK_O:
+                                games.get(gameLoop.running-1).skillO(P1);
+                                break;
 //                            case KeyEvent.VK_K:
 //                                game.moveKnight(P2, Direction.DOWN);
 //                                break;

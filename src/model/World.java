@@ -446,6 +446,16 @@ public class World {
             g.drawImage(skilli, 100, 680, null);
             g.drawString("i", 120, 675);
         }
+        if(player.lv >= 4) {
+            Image skillo;
+            try {
+                skillo = ImageIO.read(new File("assets/skillicon/heal.png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            g.drawImage(skillo, 150, 680, null);
+            g.drawString("o", 170, 675);
+        }
 
         int hp = player.hpPotionCount, mp = player.mpPotionCount, ring = player.ringCount;
         g.setColor(Color.yellow);

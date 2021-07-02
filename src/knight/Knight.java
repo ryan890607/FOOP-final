@@ -107,10 +107,17 @@ public class Knight extends HealthPointSprite {
         else fsm.trigger(STOP);
     }
     public void skillI() {
+        if (lv < 3) return;
         if (reducedMp(80)) {
             fsm.trigger(SKILLI);
         }
         else fsm.trigger(STOP);
+    }
+    public void skillO() {
+        if (lv < 4) return;
+        if (reducedMp(200)) {
+            addHp(200);
+        }
     }
     public void move(Direction direction) {
         if (direction == LEFT || direction == Direction.RIGHT) {
@@ -227,7 +234,7 @@ public class Knight extends HealthPointSprite {
         hpBar.setMax(KNIGHT_HP, KNIGHT_MP);
         hpBar.setHp(KNIGHT_HP);
         hpBar.setMp(KNIGHT_MP);
-        damage += 500;
+        damage += 100;
         levelUping = 100;
     }
 
