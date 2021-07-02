@@ -69,8 +69,8 @@ public class GameCreator {
         }
 
         World world = new World("assets/background/maplestory_background.png", o1, o2, o3, new KnightCollisionHandler(), p1, m1, m2, m3);  // model
-        world.addSprites(generator.generateIronBoar(new Point(0, 1350-170), new Point(2048, 1350-170), 3));
-        world.addSprites(generator.generateStarPixie(new Point(0, 1350-170), new Point(2048, 1350-170), 3));
+        world.addSprites(generator.generateIronBoar(new Point(300, 1350-170), new Point(2048, 1350-170), 3));
+        world.addSprites(generator.generateStarPixie(new Point(300, 1350-170), new Point(2048, 1350-170), 3));
 
         return new Game(world, p1, id);
     }

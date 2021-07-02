@@ -51,6 +51,7 @@ public class World {
     private Boss boss;
     private boolean bossAppear = false;
     public ArrayList<DropItem> dropItems = new ArrayList<>();
+
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
             background = ImageIO.read(new File(backgroundName));
@@ -147,6 +148,7 @@ public class World {
             dropItems.add(new HpPotion(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
         else if (sprite instanceof Boss) {
+            bossAppear = false;
             dropItems.add(new Ring(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
     }

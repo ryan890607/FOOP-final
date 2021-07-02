@@ -16,7 +16,7 @@ public class MonsterGenerator {
         int X;
         for (int i = 0; i < number; i++){
             X = random.nextInt(end.x - start.x);
-            monsters.add(new IronBoar(100, new Point(X, start.y)));
+            monsters.add(new IronBoar(100, new Point(X+start.x, start.y)));
         }
         return translate(monsters);
     }
@@ -26,7 +26,7 @@ public class MonsterGenerator {
         int X;
         for (int i = 0; i < number; i++){
             X = random.nextInt(end.x - start.x);
-            monsters.add(new StarPixie(30, new Point(X, start.y)));
+            monsters.add(new StarPixie(30, new Point(X+start.x, start.y)));
         }
         return translate(monsters);
     }
