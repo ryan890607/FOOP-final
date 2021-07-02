@@ -23,8 +23,8 @@ public abstract class DropItem {
 
     public void render(Graphics g) {
         g.drawImage(image, location.x, location.y, null);
-        g.setColor(Color.RED);
-        g.drawRect(location.x+bodyOffset.width, location.y+bodyOffset.height, bodysize.width, bodysize.height);
+//        g.setColor(Color.RED);
+//        g.drawRect(location.x+bodyOffset.width, location.y+bodyOffset.height, bodysize.width, bodysize.height);
     }
 
     public Point getLocation() {
