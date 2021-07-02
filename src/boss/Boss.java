@@ -138,6 +138,11 @@ public class Boss extends HealthPointSprite implements Dangerous {
     public void update() {
         fsm.update();
         //fsm_jump.update();
+        if(world == null) return;
+        if(getLocation().getX()+getBodyOffset().width < 0) location.x = -getBodyOffset().width;
+        if(getLocation().getY()+getBodyOffset().height < 0) location.y = -getBodyOffset().height;
+        if(getLocation().getX()+getBodyOffset().width > world.getBackground().getWidth(null)-getBodySize().width) location.x = world.getBackground().getWidth(null)-300+getBodyOffset().width;
+        if(getLocation().getY()+getBodyOffset().height > world.getBackground().getHeight(null)-getBodySize().height) location.y = world.getBackground().getHeight(null)-300+getBodyOffset().height;
     }
 
     @Override

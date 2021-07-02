@@ -64,23 +64,27 @@ public class GameView extends JFrame {
                             break;
                         }
                         switch (login.getWorld().state) {
-                            case 0: case 3: case 4:
+                            case 0: case 4:
                                 if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 1;
                                 break;
                             case 1:
-                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 2;
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB || keyEvent.getKeyCode() == keyEvent.VK_DOWN) login.getWorld().state = 2;
                                 if(Character.isLetterOrDigit(keyEvent.getKeyChar()))
                                     login.getWorld().account += keyEvent.getKeyChar();
                                 if(keyEvent.getKeyCode() == keyEvent.VK_BACK_SPACE && login.getWorld().account.length() > 0)
                                     login.getWorld().account = login.getWorld().account.substring(0, login.getWorld().account.length()-1);
                                 break;
                             case 2:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_UP) login.getWorld().state = 1;
                                 if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 3;
                                 if(Character.isLetterOrDigit(keyEvent.getKeyChar()))
                                     login.getWorld().password += keyEvent.getKeyChar();
                                 if(keyEvent.getKeyCode() == keyEvent.VK_BACK_SPACE && login.getWorld().password.length() > 0)
                                     login.getWorld().password = login.getWorld().password.substring(0, login.getWorld().password.length()-1);
                                 break;
+                            case 3:
+                                if(keyEvent.getKeyCode() == keyEvent.VK_TAB) login.getWorld().state = 1;
+                                if(keyEvent.getKeyCode() == keyEvent.VK_LEFT) login.getWorld().state = 1;
                         }
                         break;
                     case 1: case 2:

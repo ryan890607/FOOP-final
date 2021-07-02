@@ -25,8 +25,8 @@ public class Main {
 	public static void main(String[] args) {
 		addAudioByFilePath(Walking.AUDIO_STEP1, new File("assets/audio/step1.wav"));
 		addAudioByFilePath(Walking.AUDIO_STEP2, new File("assets/audio/step2.wav"));
-		addAudioByFilePath(Attacking.AUDIO_SWORD_CLASH_1, new File("assets/audio/sword-clash1.wav"));
-		addAudioByFilePath(Attacking.AUDIO_SWORD_CLASH_2, new File("assets/audio/sword-clash2.wav"));
+		addAudioByFilePath(Attacking.AUDIO_SWORD_CLASH_1, new File("assets/audio/punch.wav"));
+		addAudioByFilePath(Attacking.AUDIO_SWORD_CLASH_2, new File("assets/audio/swing.wav"));
 		addAudioByFilePath(HealthPointSprite.AUDIO_DIE, new File("assets/audio/die.wav"));
 		addAudioByFilePath(World.BGM, new File("assets/audio/background_BGM.wav"));
 		addAudioByFilePath(IronBoar.WAIL, new File("assets/audio/wail.wav"));

@@ -51,6 +51,7 @@ public class World {
     private Boss boss;
     private boolean bossAppear = false;
     public ArrayList<DropItem> dropItems = new ArrayList<>();
+    private boolean bossDies = false;
 
     public World(String backgroundName, List<Obstacle1> floors, List<Obstacle2> stairs, List<Obstacle3> rocks, CollisionHandler collisionHandler, Knight player, Sprite... sprites) {
         try {
@@ -148,7 +149,7 @@ public class World {
             dropItems.add(new HpPotion(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
         else if (sprite instanceof Boss) {
-            bossAppear = false;
+            bossDies = true;
             dropItems.add(new Ring(sprite.getBody().getLocation().x, sprite.getBody().getLocation().y+sprite.getBody().height));
         }
     }
@@ -375,7 +376,7 @@ public class World {
 
 
         //boss
-        if(bossAppear) {
+        if(bossAppear && !bossDies) {
             g.setColor(Color.pink);
             g.fillRect(350, 0, 300, 80);
             g.setColor(Color.black);

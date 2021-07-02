@@ -12,7 +12,7 @@ public abstract class DropItem {
 
     public DropItem(int x, int y) {
         //System.out.println(x + "," + y);
-        if(y >= 768) y = 620+768-94;
+        if(y >= 630) y = 620+768-94;
         else if(y <= 450-94) y = 360-94;
         else y = 630-94;
         location = new Point(x, y);
